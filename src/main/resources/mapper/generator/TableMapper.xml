@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temp.generator.mapper.TableMapper" >
+
+    <resultMap id="BaseResultMap" type="com.temp.generator.models.Table" >
+        <result column="COLUMN_NAME" property="columnName" jdbcType="VARCHAR" />
+        <result column="COLUMN_DEFAULT" property="columnDefault" jdbcType="VARCHAR" />
+        <result column="IS_NULLABLE" property="isNullable" jdbcType="VARCHAR" />
+        <result column="DATA_TYPE" property="dataType" jdbcType="VARCHAR" />
+        <result column="COLUMN_KEY" property="columnKey" jdbcType="VARCHAR" />
+        <result column="COLUMN_COMMENT" property="columnComment" jdbcType="VARCHAR" />
+        <result column="CHARACTER_MAXIMUM_LENGTH" property="characterMaximumLength" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        COLUMN_NAME, COLUMN_DEFAULT, IS_NULLABLE, DATA_TYPE, COLUMN_KEY, COLUMN_COMMENT, CHARACTER_MAXIMUM_LENGTH
+    </sql>
+    <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM information_schema.columns WHERE table_name = #{tableName, jdbcType=VARCHAR};
+    </select>
+
+</mapper>

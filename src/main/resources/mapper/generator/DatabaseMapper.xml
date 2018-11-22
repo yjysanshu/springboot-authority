@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temp.generator.mapper.DatabaseMapper" >
+
+    <resultMap id="BaseResultMap" type="com.temp.generator.models.Database" >
+        <result column="TABLE_NAME" property="tableName" jdbcType="VARCHAR" />
+        <result column="ENGINE" property="engine" jdbcType="VARCHAR" />
+        <result column="TABLE_COLLATION" property="tableCollation" jdbcType="VARCHAR" />
+        <result column="TABLE_ROWS" property="tableRows" jdbcType="INTEGER" />
+        <result column="TABLE_COMMENT" property="tableComment" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <resultMap id="DatabaseBaseResultMap" type="com.temp.generator.models.Databases" >
+        <result column="Database" property="database" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        TABLE_NAME, ENGINE, TABLE_COLLATION, TABLE_ROWS, TABLE_COMMENT, CREATE_TIME
+    </sql>
+
+    <select id="select" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM information_schema.tables WHERE table_schema = #{databaseName, jdbcType=VARCHAR};
+    </select>
+
+    <select id="showTables" resultMap="DatabaseBaseResultMap" parameterType="java.lang.String">
+        SHOW DATABASES;
+    </select>
+
+</mapper>

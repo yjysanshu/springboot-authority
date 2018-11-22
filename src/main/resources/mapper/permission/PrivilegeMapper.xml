@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temp.permission.mapper.PrivilegeMapper" >
+
+    <resultMap id="BaseResultMap" type="com.temp.permission.entity.Privilege" >
+        <id column="privilege_id" property="privilegeId" jdbcType="INTEGER" />
+        <result column="privilege_resource_id" property="privilegeResourceId" jdbcType="INTEGER" />
+        <result column="privilege_role_id" property="privilegeRoleId" jdbcType="INTEGER" />
+        <result column="privilege_create_at" property="privilegeCreateAt" jdbcType="TIMESTAMP" />
+        <result column="privilege_update_at" property="privilegeUpdateAt" jdbcType="TIMESTAMP" />
+        <result column="privilege_create_by" property="privilegeCreateBy" jdbcType="VARCHAR" />
+        <result column="privilege_update_by" property="privilegeUpdateBy" jdbcType="VARCHAR" />
+
+        <collection property="role" ofType="com.temp.permission.entity.Role">
+            <id column="role_id" property="roleId" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        </collection>
+        <collection property="resource" ofType="com.temp.permission.entity.Resource">
+            <id column="resource_id" property="resourceId" jdbcType="INTEGER" />
+            <result column="resource_target" property="resourceTarget" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        privilege_id, privilege_resource_id, privilege_role_id, privilege_create_at, privilege_update_at, privilege_create_by, privilege_update_by
+    </sql>
+
+    <select id="queryListByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_privilege
+        WHERE privilege_role_id = #{roleId,jdbcType=INTEGER}
+    </select>
+
+    <select id="queryCountByRoleIdsAndResourceId" resultType="java.lang.Integer" parameterType="java.util.Map">
+        SELECT
+        COUNT(*)
+        FROM back_privilege
+        WHERE privilege_role_id IN
+        <foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND privilege_resource_id = #{resourceId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="deleteByRoleIdAndResourceIds">
+        delete from back_privilege
+        where privilege_resource_id IN
+        <foreach item="item" index="index" collection="resourceIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        AND privilege_role_id = #{roleId,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="add" parameterType="com.temp.permission.entity.Privilege" >
+        INSERT INTO back_privilege
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="privilegeId != null" >
+                privilege_id,
+            </if>
+            <if test="privilegeResourceId != null" >
+                privilege_resource_id,
+            </if>
+            <if test="privilegeRoleId != null" >
+                privilege_role_id,
+            </if>
+            <if test="privilegeCreateAt != null" >
+                privilege_create_at,
+            </if>
+            <if test="privilegeUpdateAt != null" >
+                privilege_update_at,
+            </if>
+            <if test="privilegeCreateBy != null" >
+                privilege_create_by,
+            </if>
+            <if test="privilegeUpdateBy != null" >
+                privilege_update_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="privilegeId != null" >
+                #{privilegeId,jdbcType=INTEGER},
+            </if>
+            <if test="privilegeResourceId != null" >
+                #{privilegeResourceId,jdbcType=INTEGER},
+            </if>
+            <if test="privilegeRoleId != null" >
+                #{privilegeRoleId,jdbcType=INTEGER},
+            </if>
+            <if test="privilegeCreateAt != null" >
+                #{privilegeCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="privilegeUpdateAt != null" >
+                #{privilegeUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="privilegeCreateBy != null" >
+                #{privilegeCreateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="privilegeUpdateBy != null" >
+                #{privilegeUpdateBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>

@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temp.permission.mapper.RoleUserMapper" >
+
+    <resultMap id="BaseResultMap" type="com.temp.permission.entity.RoleUser" >
+        <id column="role_user_id" property="roleUserId" jdbcType="INTEGER" />
+        <result column="role_user_role_id" property="roleUserRoleId" jdbcType="INTEGER" />
+        <result column="role_user_user_id" property="roleUserUserId" jdbcType="INTEGER" />
+        <result column="role_user_create_at" property="roleUserCreateAt" jdbcType="TIMESTAMP" />
+        <result column="role_user_update_at" property="roleUserUpdateAt" jdbcType="TIMESTAMP" />
+        <result column="role_user_create_by" property="roleUserCreateBy" jdbcType="VARCHAR" />
+        <result column="role_user_update_by" property="roleUserUpdateBy" jdbcType="VARCHAR" />
+
+        <collection property="user" ofType="com.temp.permission.entity.User">
+            <id column="user_id" property="userId" jdbcType="INTEGER" />
+            <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        </collection>
+        <collection property="role" ofType="com.temp.permission.entity.Role">
+            <id column="role_id" property="roleId" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        role_user_id, role_user_role_id, role_user_user_id, role_user_create_at, role_user_update_at, role_user_create_by, role_user_update_by
+    </sql>
+
+    <select id="queryAllByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        back_role_user.*, back_user.*, back_role.*
+        FROM back_role_user
+        JOIN back_role ON role_id=role_user_role_id
+        JOIN back_user ON user_id=role_user_user_id
+        WHERE role_user_user_id = #{userId, jdbcType=INTEGER}
+    </select>
+
+    <select id="queryListByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        back_role_user.*, back_user.*, back_role.*
+        FROM back_role_user
+        JOIN back_role ON role_id=role_user_role_id
+        JOIN back_user ON user_id=role_user_user_id
+        WHERE role_user_user_id = #{userId, jdbcType=INTEGER}
+    </select>
+
+    <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_role_user
+        WHERE role_user_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="callProAddRoleUser" statementType="CALLABLE" useCache="false">
+        {
+        call addRoleUser(#{roleId,jdbcType=INTEGER}, #{userIds,jdbcType=VARCHAR})
+        }
+    </select>
+
+    <select id="callProAddUserRole" statementType="CALLABLE" useCache="false">
+        {
+        call addUserRole(#{userId,jdbcType=INTEGER}, #{roleIds,jdbcType=VARCHAR})
+        }
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM back_role_user
+        WHERE role_user_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="add" parameterType="com.temp.permission.entity.RoleUser" >
+        INSERT INTO back_role_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="roleUserId != null" >
+                role_user_id,
+            </if>
+            <if test="roleUserRoleId != null" >
+                role_user_role_id,
+            </if>
+            <if test="roleUserUserId != null" >
+                role_user_user_id,
+            </if>
+            <if test="roleUserCreateAt != null" >
+                role_user_create_at,
+            </if>
+            <if test="roleUserUpdateAt != null" >
+                role_user_update_at,
+            </if>
+            <if test="roleUserCreateBy != null" >
+                role_user_create_by,
+            </if>
+            <if test="roleUserUpdateBy != null" >
+                role_user_update_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="roleUserId != null" >
+                #{roleUserId,jdbcType=INTEGER},
+            </if>
+            <if test="roleUserRoleId != null" >
+                #{roleUserRoleId,jdbcType=INTEGER},
+            </if>
+            <if test="roleUserUserId != null" >
+                #{roleUserUserId,jdbcType=INTEGER},
+            </if>
+            <if test="roleUserCreateAt != null" >
+                #{roleUserCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleUserUpdateAt != null" >
+                #{roleUserUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleUserCreateBy != null" >
+                #{roleUserCreateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="roleUserUpdateBy != null" >
+                #{roleUserUpdateBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.temp.permission.entity.RoleUser" >
+        update back_role_user
+        <set>
+            <if test="roleUserRoleId != null" >
+                role_user_role_id = #{roleUserRoleId,jdbcType=INTEGER},
+            </if>
+            <if test="roleUserUserId != null" >
+                role_user_user_id = #{roleUserUserId,jdbcType=INTEGER},
+            </if>
+            <if test="roleUserCreateAt != null" >
+                role_user_create_at = #{roleUserCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleUserUpdateAt != null" >
+                role_user_update_at = #{roleUserUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleUserCreateBy != null" >
+                role_user_create_by = #{roleUserCreateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="roleUserUpdateBy != null" >
+                role_user_update_by = #{roleUserUpdateBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where role_user_id = #{roleUserId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

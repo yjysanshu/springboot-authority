@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temp.permission.mapper.ResourceMapper" >
+
+    <resultMap id="BaseResultMap" type="com.temp.permission.entity.Resource" >
+        <id column="resource_id" property="resourceId" jdbcType="INTEGER" />
+        <result column="resource_parent_id" property="resourceParentId" jdbcType="INTEGER" />
+        <result column="resource_target" property="resourceTarget" jdbcType="VARCHAR" />
+        <result column="resource_type" property="resourceType" jdbcType="INTEGER" />
+        <result column="resource_data" property="resourceData" jdbcType="VARCHAR" />
+        <result column="resource_create_at" property="resourceCreateAt" jdbcType="TIMESTAMP" />
+        <result column="resource_update_at" property="resourceUpdateAt" jdbcType="TIMESTAMP" />
+        <result column="resource_create_by" property="resourceCreateBy" jdbcType="VARCHAR" />
+        <result column="resource_update_by" property="resourceUpdateBy" jdbcType="VARCHAR" />
+
+        <collection property="roleList" ofType="com.temp.permission.entity.Role">
+            <id column="role_id" property="roleId" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        resource_id, resource_parent_id, resource_target, resource_type, resource_data
+    </sql>
+
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.Resource">
+        select
+        <include refid="Base_Column_List" />
+        from back_resource
+        <where>
+            <if test="resourceParentId != null" >
+                AND resource_parent_id = #{resourceParentId,jdbcType=INTEGER}
+            </if>
+            <if test="resourceType != null" >
+                AND resource_type = #{resourceType,jdbcType=INTEGER}
+            </if>
+            <if test="resourceTarget != null" >
+                AND resource_target = #{resourceTarget,jdbcType=VARCHAR}
+            </if>
+            <if test="resourceData != null" >
+                AND resource_data = #{resourceData,jdbcType=VARCHAR}
+            </if>
+            <if test="resourceCreateAt != null" >
+                AND resource_create_at = #{resourceCreateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="resourceUpdateAt != null" >
+                AND resource_update_at = #{resourceUpdateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="resourceCreateBy != null" >
+                AND resource_create_by = #{resourceCreateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="resourceUpdateBy != null" >
+                AND resource_update_by = #{resourceUpdateBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+        order by resource_id asc
+    </select>
+
+    <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_resource
+        WHERE resource_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="queryAllByType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        back_resource.*, back_role.*
+        FROM back_resource
+        JOIN back_privilege ON privilege_resource_id=resource_id
+        JOIN back_role ON role_id=privilege_role_id
+        WHERE resource_type = #{type, jdbcType=INTEGER}
+    </select>
+
+    <select id="queryListByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from
+        back_resource
+        where resource_parent_id = #{parentId,jdbcType=INTEGER}
+        order by resource_id asc
+    </select>
+
+    <select id="queryListByRoleIdAndType" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM
+        back_privilege
+        JOIN back_resource ON resource_id = privilege_resource_id
+        WHERE privilege_role_id = #{roleId,jdbcType=INTEGER}
+        AND resource_type = #{resourceType,jdbcType=VARCHAR}
+        ORDER BY resource_id ASC
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM back_resource
+        WHERE resource_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="add" parameterType="com.temp.permission.entity.Resource" >
+        insert into back_resource
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="resourceId != null" >
+                resource_id,
+            </if>
+            <if test="resourceParentId != null" >
+                resource_parent_id,
+            </if>
+            <if test="resourceType != null" >
+                resource_type,
+            </if>
+            <if test="resourceTarget != null" >
+                resource_target,
+            </if>
+            <if test="resourceData != null" >
+                resource_data,
+            </if>
+            <if test="resourceCreateAt != null" >
+                resource_create_at,
+            </if>
+            <if test="resourceUpdateAt != null" >
+                resource_update_at,
+            </if>
+            <if test="resourceCreateBy != null" >
+                resource_create_by,
+            </if>
+            <if test="resourceUpdateBy != null" >
+                resource_update_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="resourceId != null" >
+                #{resourceId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceParentId != null" >
+                #{resourceParentId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceType != null" >
+                #{resourceType,jdbcType=INTEGER},
+            </if>
+            <if test="resourceTarget != null" >
+                #{resourceTarget,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceData != null" >
+                #{resourceData,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceCreateAt != null" >
+                #{resourceCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceUpdateAt != null" >
+                #{resourceUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceCreateBy != null" >
+                #{resourceCreateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceUpdateBy != null" >
+                #{resourceUpdateBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.temp.permission.entity.Resource" >
+        update back_resource
+        <set>
+            <if test="resourceParentId != null" >
+                resource_parent_id = #{resourceParentId,jdbcType=INTEGER},
+            </if>
+            <if test="resourceType != null" >
+                resource_type = #{resourceType,jdbcType=INTEGER},
+            </if>
+            <if test="resourceTarget != null" >
+                resource_target = #{resourceTarget,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceData != null" >
+                resource_data = #{resourceData,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceCreateAt != null" >
+                resource_create_at = #{resourceCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceUpdateAt != null" >
+                resource_update_at = #{resourceUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="resourceCreateBy != null" >
+                resource_create_by = #{resourceCreateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="resourceUpdateBy != null" >
+                resource_update_by = #{resourceUpdateBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where resource_id = #{resourceId,jdbcType=INTEGER}
+    </update>
+
+</mapper>

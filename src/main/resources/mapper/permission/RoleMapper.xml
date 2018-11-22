@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temp.permission.mapper.RoleMapper" >
+
+    <resultMap id="BaseResultMap" type="com.temp.permission.entity.Role" >
+        <result column="role_id" property="roleId" jdbcType="INTEGER" />
+        <result column="role_parent_id" property="roleParentId" jdbcType="INTEGER" />
+        <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        <result column="role_desc" property="roleDesc" jdbcType="VARCHAR" />
+        <result column="role_status" property="roleStatus" jdbcType="INTEGER" />
+        <result column="role_type" property="roleType" jdbcType="INTEGER" />
+        <result column="role_create_at" property="roleCreateAt" jdbcType="TIMESTAMP" />
+        <result column="role_update_at" property="roleUpdateAt" jdbcType="TIMESTAMP" />
+        <result column="role_create_by" property="roleCreateBy" jdbcType="VARCHAR" />
+        <result column="role_update_by" property="roleUpdateBy" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        role_id, role_parent_id, role_name, role_desc, role_status, role_type, role_create_at, role_update_at, role_create_by, role_update_by
+    </sql>
+
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.Role">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_role
+        <where>
+            <if test="roleId != null" >
+                AND role_id = #{roleId,jdbcType=INTEGER}
+            </if>
+            <if test="roleParentId != null" >
+                AND role_parent_id = #{roleParentId,jdbcType=INTEGER}
+            </if>
+            <if test="roleName != null" >
+                AND role_name = #{roleName,jdbcType=VARCHAR}
+            </if>
+            <if test="roleDesc != null" >
+                AND role_desc = #{roleDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="roleStatus != null" >
+                AND role_status = #{roleStatus,jdbcType=INTEGER}
+            </if>
+            <if test="roleType != null" >
+                AND role_type = #{roleType,jdbcType=INTEGER}
+            </if>
+            <if test="roleCreateAt != null" >
+                AND role_create_at = #{roleCreateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="roleUpdateAt != null" >
+                AND role_update_at = #{roleUpdateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="roleCreateBy != null" >
+                AND role_create_by = #{roleCreateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="roleUpdateBy != null" >
+                AND role_update_by = #{roleUpdateBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY role_id DESC
+    </select>
+
+    <select id="queryPageList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_role
+        <where>
+            <if test="role.roleId != null" >
+                AND role_id = #{role.roleId,jdbcType=INTEGER}
+            </if>
+            <if test="role.roleParentId != null" >
+                AND role_parent_id = #{role.roleParentId,jdbcType=INTEGER}
+            </if>
+            <if test="role.roleName != null" >
+                AND role_name = #{role.roleName,jdbcType=VARCHAR}
+            </if>
+            <if test="role.roleDesc != null" >
+                AND role_desc = #{role.roleDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="role.roleStatus != null" >
+                AND role_status = #{role.roleStatus,jdbcType=INTEGER}
+            </if>
+            <if test="role.roleType != null" >
+                AND role_type = #{role.roleType,jdbcType=INTEGER}
+            </if>
+            <if test="role.roleCreateAt != null" >
+                AND role_create_at = #{role.roleCreateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="role.roleUpdateAt != null" >
+                AND role_update_at = #{role.roleUpdateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="role.roleCreateBy != null" >
+                AND role_create_by = #{role.roleCreateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="role.roleUpdateBy != null" >
+                AND role_update_by = #{role.roleUpdateBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+        ORDER BY role_id DESC LIMIT ${(page - 1) * size}, ${size}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="com.temp.permission.entity.Role">
+        SELECT COUNT(*) FROM back_role
+        <where>
+            <if test="roleId != null" >
+                AND role_id = #{roleId,jdbcType=INTEGER}
+            </if>
+            <if test="roleParentId != null" >
+                AND role_parent_id = #{roleParentId,jdbcType=INTEGER}
+            </if>
+            <if test="roleName != null" >
+                AND role_name = #{roleName,jdbcType=VARCHAR}
+            </if>
+            <if test="roleDesc != null" >
+                AND role_desc = #{roleDesc,jdbcType=VARCHAR}
+            </if>
+            <if test="roleStatus != null" >
+                AND role_status = #{roleStatus,jdbcType=INTEGER}
+            </if>
+            <if test="roleType != null" >
+                AND role_type = #{roleType,jdbcType=INTEGER}
+            </if>
+            <if test="roleCreateAt != null" >
+                AND role_create_at = #{roleCreateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="roleUpdateAt != null" >
+                AND role_update_at = #{roleUpdateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="roleCreateBy != null" >
+                AND role_create_by = #{roleCreateBy,jdbcType=VARCHAR}
+            </if>
+            <if test="roleUpdateBy != null" >
+                AND role_update_by = #{roleUpdateBy,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_role
+        WHERE role_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="queryListByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_role
+        WHERE role_parent_id = #{parentId,jdbcType=INTEGER}
+    </select>
+
+    <select id="queryListByRoleIds" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM back_role
+        WHERE role_id IN
+        <foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM back_role
+        WHERE role_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="add" parameterType="com.temp.permission.entity.Role" >
+        INSERT INTO back_role
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="roleId != null" >
+                role_id,
+            </if>
+            <if test="roleParentId != null" >
+                role_parent_id,
+            </if>
+            <if test="roleName != null" >
+                role_name,
+            </if>
+            <if test="roleDesc != null" >
+                role_desc,
+            </if>
+            <if test="roleStatus != null" >
+                role_status,
+            </if>
+            <if test="roleType != null" >
+                role_type,
+            </if>
+            <if test="roleCreateAt != null" >
+                role_create_at,
+            </if>
+            <if test="roleUpdateAt != null" >
+                role_update_at,
+            </if>
+            <if test="roleCreateBy != null" >
+                role_create_by,
+            </if>
+            <if test="roleUpdateBy != null" >
+                role_update_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="roleId != null" >
+                #{roleId,jdbcType=INTEGER},
+            </if>
+            <if test="roleParentId != null" >
+                #{roleParentId,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null" >
+                #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null" >
+                #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="roleStatus != null" >
+                #{roleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="roleType != null" >
+                #{roleType,jdbcType=INTEGER},
+            </if>
+            <if test="roleCreateAt != null" >
+                #{roleCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleUpdateAt != null" >
+                #{roleUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleCreateBy != null" >
+                #{roleCreateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="roleUpdateBy != null" >
+                #{roleUpdateBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.temp.permission.entity.Role" >
+        update back_role
+        <set>
+            <if test="roleParentId != null" >
+                role_parent_id = #{roleParentId,jdbcType=INTEGER},
+            </if>
+            <if test="roleName != null" >
+                role_name = #{roleName,jdbcType=VARCHAR},
+            </if>
+            <if test="roleDesc != null" >
+                role_desc = #{roleDesc,jdbcType=VARCHAR},
+            </if>
+            <if test="roleStatus != null" >
+                role_status = #{roleStatus,jdbcType=INTEGER},
+            </if>
+            <if test="roleType != null" >
+                role_type = #{roleType,jdbcType=INTEGER},
+            </if>
+            <if test="roleCreateAt != null" >
+                role_create_at = #{roleCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleUpdateAt != null" >
+                role_update_at = #{roleUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleCreateBy != null" >
+                role_create_by = #{roleCreateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="roleUpdateBy != null" >
+                role_update_by = #{roleUpdateBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where role_id = #{roleId,jdbcType=INTEGER}
+    </update>
+</mapper>
