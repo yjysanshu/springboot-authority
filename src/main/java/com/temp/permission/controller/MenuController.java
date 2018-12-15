@@ -1,8 +1,8 @@
 package com.temp.permission.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.temp.common.consts.Constants;
 import com.temp.generator.util.FormatUtil;
-import com.temp.permission.consts.ErrorConst;
 import com.temp.permission.model.request.MenuRequest;
 import com.temp.permission.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,6 @@ public class MenuController {
         if (menuService.delete(request.getId()) > 0) {
             return FormatUtil.success();
         }
-        return FormatUtil.fail(ErrorConst.DB_DELETE_EXCEPTION, null);
+        return FormatUtil.fail(Constants.DB_DELETE_ERROR.getCode(), null);
     }
 }

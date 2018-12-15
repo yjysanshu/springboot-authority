@@ -35,6 +35,7 @@ public class CommonConst {
     public static final String DATA_TYPE_ENUM = "enum";
     public static final String DATA_TYPE_CHAR = "char";
     public static final String DATA_TYPE_VARCHAR = "varchar";
+    public static final String DATA_TYPE_TEXT = "text";
     public static final String DATA_TYPE_TINYINT = "tinyint";
     public static final String DATA_TYPE_DATETIME = "datetime";
     public static final String DATA_TYPE_TIMESTAMP = "timestamp";
@@ -43,8 +44,8 @@ public class CommonConst {
     public static final String DATA_KEY_PRI = "PRI";
 
     //JAVA字段类型
-    public static final String JAVA_TYPE_TIMESTAMP = "Date";
-    public static final String JAVA_TYPE_VARCHAR = "String";
+    public static final String JAVA_TYPE_DATE = "Date";
+    public static final String JAVA_TYPE_STRING = "String";
     public static final String JAVA_TYPE_INTEGER = "Integer";
     public static final String JAVA_TYPE_DOUBLE = "Double";
 

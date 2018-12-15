@@ -4,7 +4,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @EnableTransactionManagement
-@MapperScan(value = {"com.temp.permission.mapper", "com.temp.generator.mapper"})
+@MapperScan(value = {
+		"com.temp.permission.mapper",
+		"com.temp.generator.mapper",
+		"com.temp.common.mapper"
+})
 @SpringBootApplication
 public class Application {
 

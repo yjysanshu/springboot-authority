@@ -25,24 +25,24 @@
     <!--查询用户信息-->
     <select id="userInfo" resultMap="BaseResultMap">
         SELECT *
-        FROM back_user
+        FROM admin_user
     </select>
 
     <select id="queryOneByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
-        back_user.*, back_role.*
-        FROM back_user
-        JOIN back_role_user ON role_user_user_id=user_id
-        JOIN back_role ON role_id=role_user_role_id
+        admin_user.*, admin_role.*
+        FROM admin_user
+        JOIN admin_role_user ON role_user_user_id=user_id
+        JOIN admin_role ON role_id=role_user_role_id
         WHERE user_phone = #{phone, jdbcType=VARCHAR}
     </select>
 
     <select id="queryOneByToken" resultMap="BaseResultMap" parameterType="java.lang.String">
         SELECT
-        back_user.*, back_role.*
-        FROM back_user
-        JOIN back_role_user ON role_user_user_id=user_id
-        JOIN back_role ON role_id=role_user_role_id
+        admin_user.*, admin_role.*
+        FROM admin_user
+        JOIN admin_role_user ON role_user_user_id=user_id
+        JOIN admin_role ON role_id=role_user_role_id
         WHERE user_token = #{token, jdbcType=VARCHAR}
     </select>
 

@@ -7,7 +7,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.WebApplicationInitializer;
 
 @EnableTransactionManagement
-@MapperScan("com.temp.permission.mapper")
+@MapperScan(value = {
+		"com.temp.permission.mapper",
+		"com.temp.generator.mapper",
+		"com.temp.common.mapper"
+})
 @SpringBootApplication
 public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
 

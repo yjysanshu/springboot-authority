@@ -1,8 +1,9 @@
 package com.temp.permission.controller;
 
+import com.temp.common.model.ResponseData;
 import com.temp.permission.model.request.RoleUserRequest;
+import com.temp.common.util.FormatUtil;
 import com.temp.permission.service.RoleUserService;
-import com.temp.permission.util.FormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ public class RoleUserController {
     private RoleUserService service;
 
     @RequestMapping("/list")
-    public Map list(@RequestBody RoleUserRequest request) {
+    public ResponseData list(@RequestBody RoleUserRequest request) {
         Map<String, Object> map = new HashMap<>();
         map.put("list", service.getList(request));
         map.put("total", service.getTotal(request));
@@ -27,12 +28,12 @@ public class RoleUserController {
     }
 
     @RequestMapping("/save")
-    public Map save(@RequestBody RoleUserRequest request) {
+    public ResponseData save(@RequestBody RoleUserRequest request) {
         return FormatUtil.success(service.save(request));
     }
 
     @RequestMapping("/del")
-    public Map delete(@RequestBody RoleUserRequest request) {
+    public ResponseData delete(@RequestBody RoleUserRequest request) {
         if (service.delete(request.getId()) > 0) {
             return FormatUtil.success();
         }

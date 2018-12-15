@@ -65,17 +65,18 @@ public class TableExtend extends Table {
         switch (dataType) {
             case ModelConst.DATA_TYPE_INT:
             case ModelConst.DATA_TYPE_TINYINT:
-                return ModelConst.JAVA_TYPE_INTEGER;
+                return ModelConst.JAVA_TYPE_INTEGER;    //java的int类型
             case ModelConst.DATA_TYPE_FLOAT:
             case ModelConst.DATA_TYPE_DOUBLE:
-                return ModelConst.JAVA_TYPE_DOUBLE;
+                return ModelConst.JAVA_TYPE_DOUBLE; //java的double类型
             case ModelConst.DATA_TYPE_ENUM:
             case ModelConst.DATA_TYPE_CHAR:
             case ModelConst.DATA_TYPE_VARCHAR:
-                return ModelConst.JAVA_TYPE_VARCHAR;
+            case ModelConst.DATA_TYPE_TEXT:
+                return ModelConst.JAVA_TYPE_STRING; //java的string类型
             case ModelConst.DATA_TYPE_DATETIME:
             case ModelConst.DATA_TYPE_TIMESTAMP:
-                return ModelConst.JAVA_TYPE_TIMESTAMP;
+                return ModelConst.JAVA_TYPE_DATE;   //java的date类型
         }
         return ModelConst.TYPE_ERROR;
     }
@@ -89,18 +90,19 @@ public class TableExtend extends Table {
         switch (dataType) {
             case ModelConst.DATA_TYPE_INT:
             case ModelConst.DATA_TYPE_TINYINT:
-                return ModelConst.JDBC_TYPE_INTEGER;
+                return ModelConst.JDBC_TYPE_INTEGER;    //jdbc的integer类型
             case ModelConst.DATA_TYPE_FLOAT:
-                return ModelConst.JDBC_TYPE_FLOAT;
+                return ModelConst.JDBC_TYPE_FLOAT;      //jdbc的float类型
             case ModelConst.DATA_TYPE_DOUBLE:
-                return ModelConst.JDBC_TYPE_DOUBLE;
+                return ModelConst.JDBC_TYPE_DOUBLE;     //jdbc的double类型
             case ModelConst.DATA_TYPE_ENUM:
             case ModelConst.DATA_TYPE_CHAR:
             case ModelConst.DATA_TYPE_VARCHAR:
-                return ModelConst.JDBC_TYPE_VARCHAR;
+            case ModelConst.DATA_TYPE_TEXT:
+                return ModelConst.JDBC_TYPE_VARCHAR;    //jdbc的varchar类型
             case ModelConst.DATA_TYPE_DATETIME:
             case ModelConst.DATA_TYPE_TIMESTAMP:
-                return ModelConst.JDBC_TYPE_TIMESTAMP;
+                return ModelConst.JDBC_TYPE_TIMESTAMP;  //jdbc的timestamp类型
         }
         return ModelConst.TYPE_ERROR;
     }

@@ -1,8 +1,9 @@
 package com.temp.permission.controller;
 
+import com.temp.common.model.ResponseData;
+import com.temp.common.util.FormatUtil;
 import com.temp.permission.model.request.PrivilegeRequest;
 import com.temp.permission.service.PrivilegeService;
-import com.temp.permission.util.FormatUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ public class PrivilegeController {
     private PrivilegeService service;
 
     @RequestMapping("/list")
-    public Map list(@RequestBody PrivilegeRequest request) {
+    public ResponseData list(@RequestBody PrivilegeRequest request) {
         Map<String, Object> map = new HashMap<>();
         //map.put("list", service.getList(request));
         //map.put("total", service.getTotal(request));
@@ -27,13 +28,13 @@ public class PrivilegeController {
     }
 
     @RequestMapping("/save")
-    public Map save(@RequestBody PrivilegeRequest request) {
+    public ResponseData save(@RequestBody PrivilegeRequest request) {
         //return FormatUtil.success(service.save(request));
         return null;
     }
 
     @RequestMapping("/del")
-    public Map delete(@RequestBody PrivilegeRequest request) {
+    public ResponseData delete(@RequestBody PrivilegeRequest request) {
 //        if (service.delete(request.getId()) > 0) {
 //            return FormatUtil.success();
 //        }

@@ -28,14 +28,14 @@
     <select id="queryListByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_privilege
+        FROM admin_privilege
         WHERE privilege_role_id = #{roleId,jdbcType=INTEGER}
     </select>
 
     <select id="queryCountByRoleIdsAndResourceId" resultType="java.lang.Integer" parameterType="java.util.Map">
         SELECT
         COUNT(*)
-        FROM back_privilege
+        FROM admin_privilege
         WHERE privilege_role_id IN
         <foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
             #{item}
@@ -44,7 +44,7 @@
     </select>
 
     <delete id="deleteByRoleIdAndResourceIds">
-        delete from back_privilege
+        delete from admin_privilege
         where privilege_resource_id IN
         <foreach item="item" index="index" collection="resourceIds" open="(" separator="," close=")">
             #{item}
@@ -53,7 +53,7 @@
     </delete>
 
     <insert id="add" parameterType="com.temp.permission.entity.Privilege" >
-        INSERT INTO back_privilege
+        INSERT INTO admin_privilege
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="privilegeId != null" >
                 privilege_id,

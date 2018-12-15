@@ -31,7 +31,7 @@
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.User">
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_user
+        FROM admin_user
         <where>
             <if test="userId != null" >
                 AND user_id = #{userId,jdbcType=INTEGER}
@@ -83,9 +83,9 @@
         SELECT
         <include refid="Base_Column_List" />
         , role_id, role_name
-        FROM back_user
-        LEFT JOIN back_role_user ON role_user_user_id=user_id
-        LEFT JOIN back_role ON role_id=role_user_role_id
+        FROM admin_user
+        LEFT JOIN admin_role_user ON role_user_user_id=user_id
+        LEFT JOIN admin_role ON role_id=role_user_role_id
         <where>
             <if test="user.userId != null" >
                 AND user_id = #{user.userId,jdbcType=INTEGER}
@@ -134,7 +134,7 @@
     </select>
 
     <select id="queryCount" resultType="java.lang.Integer" parameterType="com.temp.permission.entity.User">
-        SELECT COUNT(*) FROM back_user
+        SELECT COUNT(*) FROM admin_user
         <where>
             <if test="userId != null" >
                 AND user_id = #{userId,jdbcType=INTEGER}
@@ -184,41 +184,41 @@
     <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_user
+        FROM admin_user
         WHERE user_id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="queryOneByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT back_user.*, role_id, role_name
-        FROM back_user
-        JOIN back_role_user ON role_user_user_id=user_id
-        JOIN back_role ON role_id=role_user_role_id
-        FROM back_user where user_phone = #{phone, jdbcType=VARCHAR}
+        SELECT admin_user.*, role_id, role_name
+        FROM admin_user
+        JOIN admin_role_user ON role_user_user_id=user_id
+        JOIN admin_role ON role_id=role_user_role_id
+        FROM admin_user where user_phone = #{phone, jdbcType=VARCHAR}
     </select>
 
     <select id="queryOneByToken" resultMap="BaseResultMap" parameterType="java.lang.String">
-        SELECT back_user.*, role_id, role_name
-        FROM back_user
-        JOIN back_role_user ON role_user_user_id=user_id
-        JOIN back_role ON role_id=role_user_role_id
+        SELECT admin_user.*, role_id, role_name
+        FROM admin_user
+        JOIN admin_role_user ON role_user_user_id=user_id
+        JOIN admin_role ON role_id=role_user_role_id
         where user_token = #{token, jdbcType=VARCHAR}
     </select>
 
     <select id="queryListByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_user
-        LEFT JOIN back_role_user ON role_user_user_id=user_id
+        FROM admin_user
+        LEFT JOIN admin_role_user ON role_user_user_id=user_id
         WHERE role_user_role_id = #{roleId,jdbcType=INTEGER}
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM back_user
+        DELETE FROM admin_user
         WHERE user_id = #{id,jdbcType=INTEGER}
     </delete>
 
     <insert id="add" useGeneratedKeys="true" keyProperty="userId" parameterType="com.temp.permission.entity.User" >
-        INSERT INTO back_user
+        INSERT INTO admin_user
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="userId != null" >
                 user_id,
@@ -310,7 +310,7 @@
     </insert>
 
     <update id="update" parameterType="com.temp.permission.entity.User" >
-        update back_user
+        update admin_user
         <set>
             <if test="userPhone != null" >
                 user_phone = #{userPhone,jdbcType=VARCHAR},

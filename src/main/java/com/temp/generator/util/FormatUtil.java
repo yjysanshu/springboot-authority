@@ -18,8 +18,8 @@ public class FormatUtil {
 
     public static Map success(Object data) {
         Map<String, Object> map = new HashMap<>();
-        map.put("code", ErrorConst.NO_EXCEPTION);
-        map.put("message", ErrorConst.messageMap.get(ErrorConst.NO_EXCEPTION));
+        map.put("code", ErrorConst.SUCCESS);
+        map.put("message", ErrorConst.messageMap.get(ErrorConst.SUCCESS));
         if (data != null)
             map.put("data", data);
         else

@@ -27,26 +27,26 @@
 
     <select id="queryAllByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
-        back_role_user.*, back_user.*, back_role.*
-        FROM back_role_user
-        JOIN back_role ON role_id=role_user_role_id
-        JOIN back_user ON user_id=role_user_user_id
+        admin_role_user.*, admin_user.*, admin_role.*
+        FROM admin_role_user
+        JOIN admin_role ON role_id=role_user_role_id
+        JOIN admin_user ON user_id=role_user_user_id
         WHERE role_user_user_id = #{userId, jdbcType=INTEGER}
     </select>
 
     <select id="queryListByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
-        back_role_user.*, back_user.*, back_role.*
-        FROM back_role_user
-        JOIN back_role ON role_id=role_user_role_id
-        JOIN back_user ON user_id=role_user_user_id
+        admin_role_user.*, admin_user.*, admin_role.*
+        FROM admin_role_user
+        JOIN admin_role ON role_id=role_user_role_id
+        JOIN admin_user ON user_id=role_user_user_id
         WHERE role_user_user_id = #{userId, jdbcType=INTEGER}
     </select>
 
     <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_role_user
+        FROM admin_role_user
         WHERE role_user_id = #{id,jdbcType=INTEGER}
     </select>
 
@@ -63,12 +63,12 @@
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM back_role_user
+        DELETE FROM admin_role_user
         WHERE role_user_id = #{id,jdbcType=INTEGER}
     </delete>
 
     <insert id="add" parameterType="com.temp.permission.entity.RoleUser" >
-        INSERT INTO back_role_user
+        INSERT INTO admin_role_user
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="roleUserId != null" >
                 role_user_id,
@@ -118,7 +118,7 @@
     </insert>
 
     <update id="update" parameterType="com.temp.permission.entity.RoleUser" >
-        update back_role_user
+        update admin_role_user
         <set>
             <if test="roleUserRoleId != null" >
                 role_user_role_id = #{roleUserRoleId,jdbcType=INTEGER},

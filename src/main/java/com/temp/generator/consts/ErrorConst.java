@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class ErrorConst {
 
-    public static int NO_EXCEPTION = 0;
+    public static int SUCCESS = 0;
     public static int SYSTEM_EXCEPTION = 1;
     public static int LOGIN_EXCEPTION = 2;
 
@@ -20,7 +20,7 @@ public class ErrorConst {
     //异常message
     public static Map<Integer, String> messageMap = new HashMap<>();
     static {
-        messageMap.put(NO_EXCEPTION, "成功");
+        messageMap.put(SUCCESS, "成功");
         messageMap.put(SYSTEM_EXCEPTION, "系统异常，请稍后重试！");
         messageMap.put(LOGIN_EXCEPTION, "需要登录！");
         messageMap.put(PARAMS_EXCEPTION, "你的请求参数异常！");

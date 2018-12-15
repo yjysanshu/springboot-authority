@@ -11,6 +11,7 @@ public class ModelRequestService extends BaseService {
 
     @Override
     protected void generator() {
+        sb.append(ModelConst.TXT_IMPORT_LINE_DTO);
         sb.append(ModelConst.TXT_CLASS_EXTEND_LINE.replaceAll(ModelConst.REPLACE_CLASS, this.getClassName())
                 .replaceAll(ModelConst.REPLACE_PARENT, ModelConst.PARENT_CLASS_REQUEST));
         //private行

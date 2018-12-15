@@ -4,11 +4,14 @@ import com.temp.generator.execption.GeneratorException;
 import com.temp.generator.models.request.GeneratorRequest;
 import com.temp.generator.service.TableService;
 import com.temp.generator.util.ActionFactory;
+import com.temp.generator.util.FormatUtil;
 import com.temp.generator.util.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/generator")
@@ -18,7 +21,7 @@ public class GeneratorController {
     private TableService tableService;
 
     @RequestMapping("/index")
-    public String index(@RequestBody GeneratorRequest request) throws GeneratorException {
+    public Map index(@RequestBody GeneratorRequest request) throws GeneratorException {
         Boolean isTrue = false;
         String tableName;
         if (request.isDeletePrefix()) {
@@ -31,8 +34,8 @@ public class GeneratorController {
                     request.getPackageName(), tableName, request.getTableName()).handle();
         }
         if (isTrue) {
-            return "{code: 0, message: 成功}";
+            return FormatUtil.success();
         }
-        return "{code: 1, message: 失败}";
+        return FormatUtil.fail();
     }
 }

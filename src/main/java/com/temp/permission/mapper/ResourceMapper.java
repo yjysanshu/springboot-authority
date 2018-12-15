@@ -1,5 +1,6 @@
 package com.temp.permission.mapper;
 
+import com.temp.common.mapper.BaseMapper;
 import com.temp.permission.entity.Resource;
 
 import java.util.List;

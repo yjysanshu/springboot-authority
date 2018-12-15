@@ -22,7 +22,7 @@
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.Role">
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_role
+        FROM admin_role
         <where>
             <if test="roleId != null" >
                 AND role_id = #{roleId,jdbcType=INTEGER}
@@ -61,7 +61,7 @@
     <select id="queryPageList" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_role
+        FROM admin_role
         <where>
             <if test="role.roleId != null" >
                 AND role_id = #{role.roleId,jdbcType=INTEGER}
@@ -98,7 +98,7 @@
     </select>
 
     <select id="queryCount" resultType="java.lang.Integer" parameterType="com.temp.permission.entity.Role">
-        SELECT COUNT(*) FROM back_role
+        SELECT COUNT(*) FROM admin_role
         <where>
             <if test="roleId != null" >
                 AND role_id = #{roleId,jdbcType=INTEGER}
@@ -136,21 +136,21 @@
     <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_role
+        FROM admin_role
         WHERE role_id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="queryListByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_role
+        FROM admin_role
         WHERE role_parent_id = #{parentId,jdbcType=INTEGER}
     </select>
 
     <select id="queryListByRoleIds" resultMap="BaseResultMap">
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_role
+        FROM admin_role
         WHERE role_id IN
         <foreach item="item" index="index" collection="roleIds" open="(" separator="," close=")">
             #{item}
@@ -158,12 +158,12 @@
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM back_role
+        DELETE FROM admin_role
         WHERE role_id = #{id,jdbcType=INTEGER}
     </delete>
 
     <insert id="add" parameterType="com.temp.permission.entity.Role" >
-        INSERT INTO back_role
+        INSERT INTO admin_role
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="roleId != null" >
                 role_id,
@@ -231,7 +231,7 @@
     </insert>
 
     <update id="update" parameterType="com.temp.permission.entity.Role" >
-        update back_role
+        update admin_role
         <set>
             <if test="roleParentId != null" >
                 role_parent_id = #{roleParentId,jdbcType=INTEGER},

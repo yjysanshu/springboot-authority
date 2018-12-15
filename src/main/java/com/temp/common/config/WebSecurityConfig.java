@@ -1,11 +1,11 @@
 package com.temp.common.config;
 
+import com.temp.common.consts.Constants;
+import com.temp.common.model.ResponseData;
+import com.temp.permission.model.OauthUser;
 import com.temp.permission.consts.CharacterConst;
 import com.temp.permission.consts.CommonConst;
-import com.temp.permission.consts.ErrorConst;
 import com.temp.permission.consts.HeaderConst;
-import com.temp.permission.model.OauthUser;
-import com.temp.permission.model.response.Result;
 import com.temp.permission.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -73,16 +73,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     httpServletResponse.setContentType(HeaderConst.CONTENT_TYPE);
                     httpServletResponse.setHeader(HeaderConst.ACCESS_CONTROL_ALLOW_ORIGIN, CharacterConst.CHARACTER_ARBITRARILY);
                     PrintWriter out = httpServletResponse.getWriter();
-                    Result result = new Result();
-                    result.setCode(ErrorConst.SYSTEM_EXCEPTION);
+                    ResponseData responseData = new ResponseData(Constants.LOGIN_FAIL);
                     if (e instanceof UsernameNotFoundException || e instanceof BadCredentialsException) {
-                        result.setMessage(ErrorConst.messageMap.get(ErrorConst.LOGIN_PARAMS_ERROR));
+                        responseData.setMessage(Constants.LOGIN_PARAMS_ERROR.getMsg());
                     } else if (e instanceof DisabledException) {
-                        result.setMessage(ErrorConst.messageMap.get(ErrorConst.LOGIN_USER_DISABLE));
-                    } else {
-                        result.setMessage(ErrorConst.messageMap.get(ErrorConst.LOGIN_FAIL));
+                        responseData.setMessage(Constants.LOGIN_USER_DISABLE.getMsg());
                     }
-                    out.write(result.toJson());
+                    out.write(responseData.toJSONString());
                     out.flush();
                     out.close();
                 })
@@ -90,13 +87,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     httpServletResponse.setContentType(HeaderConst.CONTENT_TYPE);
                     httpServletResponse.setHeader(HeaderConst.ACCESS_CONTROL_ALLOW_ORIGIN, CharacterConst.CHARACTER_ARBITRARILY);
                     PrintWriter out = httpServletResponse.getWriter();
-                    Result result = new Result();
-                    result.setCode(ErrorConst.NO_EXCEPTION);
-                    result.setMessage(ErrorConst.messageMap.get(ErrorConst.NO_EXCEPTION));
+                    ResponseData response = new ResponseData(Constants.SUCCESS);
                     Map<String, Object> map = new HashMap<>();
                     map.put(CommonConst.RESPONSE_TOKEN, getCurrentFilterUser().getUserToken());
-                    result.setData(map);
-                    out.write(result.toJson());
+                    response.setData(map);
+                    out.write(response.toJSONString());
                     out.flush();
                     out.close();
                 })

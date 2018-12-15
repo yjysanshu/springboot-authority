@@ -26,7 +26,7 @@
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.Resource">
         select
         <include refid="Base_Column_List" />
-        from back_resource
+        from admin_resource
         <where>
             <if test="resourceParentId != null" >
                 AND resource_parent_id = #{resourceParentId,jdbcType=INTEGER}
@@ -59,16 +59,16 @@
     <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         SELECT
         <include refid="Base_Column_List" />
-        FROM back_resource
+        FROM admin_resource
         WHERE resource_id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="queryAllByType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
-        back_resource.*, back_role.*
-        FROM back_resource
-        JOIN back_privilege ON privilege_resource_id=resource_id
-        JOIN back_role ON role_id=privilege_role_id
+        admin_resource.*, admin_role.*
+        FROM admin_resource
+        JOIN admin_privilege ON privilege_resource_id=resource_id
+        JOIN admin_role ON role_id=privilege_role_id
         WHERE resource_type = #{type, jdbcType=INTEGER}
     </select>
 
@@ -76,7 +76,7 @@
         select
         <include refid="Base_Column_List" />
         from
-        back_resource
+        admin_resource
         where resource_parent_id = #{parentId,jdbcType=INTEGER}
         order by resource_id asc
     </select>
@@ -85,20 +85,20 @@
         SELECT
         <include refid="Base_Column_List" />
         FROM
-        back_privilege
-        JOIN back_resource ON resource_id = privilege_resource_id
+        admin_privilege
+        JOIN admin_resource ON resource_id = privilege_resource_id
         WHERE privilege_role_id = #{roleId,jdbcType=INTEGER}
         AND resource_type = #{resourceType,jdbcType=VARCHAR}
         ORDER BY resource_id ASC
     </select>
 
     <delete id="delete" parameterType="java.lang.Integer" >
-        DELETE FROM back_resource
+        DELETE FROM admin_resource
         WHERE resource_id = #{id,jdbcType=INTEGER}
     </delete>
 
     <insert id="add" parameterType="com.temp.permission.entity.Resource" >
-        insert into back_resource
+        insert into admin_resource
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="resourceId != null" >
                 resource_id,
@@ -160,7 +160,7 @@
     </insert>
 
     <update id="update" parameterType="com.temp.permission.entity.Resource" >
-        update back_resource
+        update admin_resource
         <set>
             <if test="resourceParentId != null" >
                 resource_parent_id = #{resourceParentId,jdbcType=INTEGER},

@@ -1,6 +1,7 @@
 package com.temp.generator.util;
 
 import com.temp.generator.consts.CharacterConst;
+import com.temp.permission.util.ConsoleUtil;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -25,13 +26,18 @@ public class FileUtil {
         if (directory.exists()) {
             System.out.println("存在文件夹" + filePath);
         } else {
+            ConsoleUtil.formatPrint(filePath);
             String[] fileArr = filePath.split("/");
             File dir;
             List<String> list = new ArrayList<>();
+            ConsoleUtil.formatPrint(fileArr);
             for (int i = 1; i < fileArr.length; i++) {
+                ConsoleUtil.formatPrint(fileArr);
+                ConsoleUtil.formatPrint(fileArr[i]);
                 list.add(fileArr[i]);
-                String path = StringUtil.join(list.toArray(), "/");
+                String path = fileArr[0] + StringUtil.join(list.toArray(), "/");
                 dir = new File(path);
+                ConsoleUtil.formatPrint(path);
                 if (!dir.exists()) {
                     System.out.println(path);
                     dir.mkdir();

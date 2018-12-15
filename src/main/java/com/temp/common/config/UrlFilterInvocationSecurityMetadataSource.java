@@ -38,7 +38,7 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
     @Override
     public Collection<ConfigAttribute> getAttributes(Object o) throws IllegalArgumentException {
         String requestUrl = ((FilterInvocation) o).getRequestUrl();
-        if ("/user/login".equals(requestUrl)) {
+        if ("/user/login".equals(requestUrl) || requestUrl.startsWith("/api")) {
             return null;
         }
 

@@ -15,10 +15,10 @@ public class MapperConst extends CommonConst {
     public static final String REPLACE_CONDITION_COLUMN_WHERE = "\\[conditionColumnWhere\\]";
     public static final String REPLACE_CONDITION_COLUMN_WHERE_WITH_CLASS = "\\[conditionColumnWhereWithClass\\]";
 
-    public static final String TXT_IMPORT_CUSTOM_INFO = "import [package].permission.entity.[ModelClass];\n\n";
+    public static final String TXT_IMPORT_CUSTOM_INFO = "import [package].common.model.entity.[ModelClass];\n\n";
     public static final String TXT_MIDDLE_CLASS = "public interface [ModelClass]Mapper extends BaseMapper<[ModelClass]> {\n\n}";
 
-    public static final String COMMON_MAPPER_PACKAGE = ".permission.mapper";
+    public static final String COMMON_MAPPER_PACKAGE = ".common.mapper";
 
     public static final String CLASS_NAME_MAPPER = "Mapper";
 
@@ -27,26 +27,26 @@ public class MapperConst extends CommonConst {
     public static final String TXT_VALUE_LINE = "#{[columnName],jdbcType=[jdbcType]}, ";
     public static final String TXT_RESULT_LINE = "        <result column=\"[column]\" property=\"[columnName]\" jdbcType=\"[jdbcType]\" />\n";
     public static final String TXT_CONDITION_LIST =  "            <if test=\"[columnName] != null\" >\n" +
-                                                     "                [column],\n" +
-                                                     "            </if>\n";
+            "                [column],\n" +
+            "            </if>\n";
     public static final String TXT_CONDITION_VALUE =  "            <if test=\"[columnName] != null\" >\n" +
-                                                      "                #{[columnName],jdbcType=[jdbcType]},\n" +
-                                                      "            </if>\n";
+            "                #{[columnName],jdbcType=[jdbcType]},\n" +
+            "            </if>\n";
     public static final String TXT_CONDITION_SET = "            <if test=\"[columnName] != null\" >\n" +
-                                                    "                [column] = #{[columnName],jdbcType=[jdbcType]},\n" +
-                                                    "            </if>\n";
+            "                [column] = #{[columnName],jdbcType=[jdbcType]},\n" +
+            "            </if>\n";
     public static final String TXT_CONDITION_WHERE = "            <if test=\"[columnName] != null\" >\n" +
-                                                    "                AND [column] = #{[columnName],jdbcType=[jdbcType]}\n" +
-                                                    "            </if>\n";
+            "                AND [column] = #{[columnName],jdbcType=[jdbcType]}\n" +
+            "            </if>\n";
     public static final String TXT_CONDITION_WHERE_WITH_MODEL = "            <if test=\"[modelClass].[columnName] != null\" >\n" +
-                                                                "                AND [column] = #{[modelClass].[columnName],jdbcType=[jdbcType]}\n" +
-                                                                "            </if>\n";
+            "                AND [column] = #{[modelClass].[columnName],jdbcType=[jdbcType]}\n" +
+            "            </if>\n";
 
     public static final String TXT_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n" +
             "<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n" +
-            "<mapper namespace=\"com.temp.permission.mapper.[ModelClass]Mapper\" >\n" +
+            "<mapper namespace=\"com.temp.common.mapper.[ModelClass]Mapper\" >\n" +
             "\n" +
-            "    <resultMap id=\"BaseResultMap\" type=\"[package].permission.entity.[ModelClass]\" >\n" +
+            "    <resultMap id=\"BaseResultMap\" type=\"[package].common.model.entity.[ModelClass]\" >\n" +
             "[resultMapLine]" +
             "    </resultMap>\n" +
             "\n" +
@@ -54,7 +54,7 @@ public class MapperConst extends CommonConst {
             "        [baseColumnLine]\n" +
             "    </sql>\n" +
             "\n" +
-            "    <select id=\"queryList\" resultMap=\"BaseResultMap\" parameterType=\"[package].permission.entity.[ModelClass]\">\n" +
+            "    <select id=\"queryList\" resultMap=\"BaseResultMap\" parameterType=\"[package].common.model.entity.[ModelClass]\">\n" +
             "        SELECT\n" +
             "        <include refid=\"Base_Column_List\" />\n" +
             "        FROM [realTableName]\n" +
@@ -74,7 +74,7 @@ public class MapperConst extends CommonConst {
             "        ORDER BY [primaryKey] DESC LIMIT ${(page - 1) * size}, ${size}\n" +
             "    </select>\n" +
             "\n" +
-            "    <select id=\"queryCount\" resultType=\"java.lang.Integer\" parameterType=\"[package].permission.entity.[ModelClass]\">\n" +
+            "    <select id=\"queryCount\" resultType=\"java.lang.Integer\" parameterType=\"[package].common.model.entity.[ModelClass]\">\n" +
             "        SELECT COUNT(*) FROM [realTableName]\n" +
             "        <where>\n" +
             "[conditionColumnWhere]" +
@@ -93,7 +93,7 @@ public class MapperConst extends CommonConst {
             "        WHERE [primaryKey] = #{id,jdbcType=INTEGER}\n" +
             "    </delete>\n" +
             "\n" +
-            "    <insert id=\"add\" parameterType=\"[package].permission.entity.[ModelClass]\" >\n" +
+            "    <insert id=\"add\" parameterType=\"[package].common.model.entity.[ModelClass]\" >\n" +
             "        INSERT INTO [realTableName]\n" +
             "        <trim prefix=\"(\" suffix=\")\" suffixOverrides=\",\" >\n" +
             "[conditionColumnList]" +
@@ -103,7 +103,7 @@ public class MapperConst extends CommonConst {
             "        </trim>\n" +
             "    </insert>\n" +
             "\n" +
-            "    <update id=\"update\" parameterType=\"[package].permission.entity.[ModelClass]\" >\n" +
+            "    <update id=\"update\" parameterType=\"[package].common.model.entity.[ModelClass]\" >\n" +
             "        update [realTableName]\n" +
             "        <set>\n" +
             "[conditionColumnSet]" +
