@@ -9,3 +9,21 @@
 
 ### 1.0.1
 > 新增了一些功能，以及写了两个demo
+
+### 代码使用说明
+> 需要和前端一起使用  
+前端github地址：https://github.com/yjysanshu/vue--authority
+
+> 先在配置文件中把数据库的信息配置一下，然后执行sql
+
+### 开发调试
+> 直接启动Application
+
+或者
+
+```shell
+mvn spring-boot:run
+```
+
+### 不会
+加QQ群：630661697

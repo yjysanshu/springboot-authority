@@ -3,10 +3,7 @@ package com.temp;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.WebApplicationInitializer;
 
 @EnableTransactionManagement
 @MapperScan(value = {
@@ -15,15 +12,9 @@ import org.springframework.web.WebApplicationInitializer;
 		"com.temp.common.mapper"
 })
 @SpringBootApplication
-public class Application extends SpringBootServletInitializer implements WebApplicationInitializer {
-
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application){
-
-		return application.sources(Application.class);
-	}
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(Application.class, args);
+		SpringApplication.run(com.temp.Application.class, args);
 	}
 }

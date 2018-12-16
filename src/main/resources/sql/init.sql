@@ -7,7 +7,7 @@ CREATE TABLE `configure` (
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统及参数配置项表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='系统及参数配置项表';
 
 CREATE TABLE `student` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
@@ -20,4 +20,4 @@ CREATE TABLE `student` (
   `update_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uniq_number` (`number`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='学生信息表'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='学生信息表';

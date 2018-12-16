@@ -8,7 +8,7 @@
 	<version>1.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>temp</name>
-	<description>Community2 project for Spring Boot</description>
+	<description>Authority project for Spring Boot</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
