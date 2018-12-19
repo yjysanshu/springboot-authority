@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- scan: 当此属性设置为true时，配置文件如果发生改变，将会被重新加载，默认值为true -->
+<configuration scan="true">
+	<!--<property name="APP" value="${project.artifactId}" />-->
+	<property name="APP" value="testing" />
+	<springProperty scope="context" name="LOG_HOME" source="logging.path"/>
+	<springProperty scope="context" name="LOG_INFO" source="logging.level"/>
+	<!-- 控制台日志 ConsoleAppender -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %c{1} %L %X{ServiceId} - %m%n</pattern>
+		</encoder>
+	</appender>
+	<!--RollingFileAppender：滚动记录文件，先将日志记录到指定文件，当符合某个条件时，将日志记录到其他文件-->
+	<appender name="DETAIL"
+		class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+		<!--被写入的文件名，可以是相对目录，也可以是绝对目录，如果上级目录不存在会自动创建，没有默认值-->
+		<File>${LOG_HOME}/${APP}_detail.log</File>
+		<encoder>
+			<pattern>%d{yy-MM-dd.HH:mm:ss.SSS} [%-16t] %-5p %c{1} %L %X{ServiceId} - %m%n</pattern>
+		</encoder>
+		<!--当发生滚动时，决定RollingFileAppender的行为，涉及文件移动和重命名 TimeBasedRollingPolicy最常用的滚动策略，它根据时间来制定滚动策略，既负责滚动也负责触发滚动-->
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${APP}_detail.log.%d{yyyyMMdd}</fileNamePattern>
+			<!--日志文件保留天数-->
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+	</appender>
+	<appender name="ACCESS"
+		class="ch.qos.logback.core.rolling.RollingFileAppender" additivity="false">
+		<File>${LOG_HOME}/${APP}_access.log</File>
+		<encoder>
+			<pattern>%d{yy-MM-dd.HH:mm:ss.SSS};%X{ServiceId};%m%n</pattern>
+		</encoder>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/${APP}_${LOG_LEVEL}.log.%d{yyyyMMdd}</fileNamePattern>
+			<!--日志文件保留天数-->
+			<MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+
+	</appender>
+
+	<!--用来设置某一个包或具体的某一个类的日志打印级别-->
+	<logger name="ACCESS">
+		<appender-ref ref="ACCESS" />
+	</logger>
+	<!--表示把>=INFO级别的日志都输出到日志文件 ${LOG_HOME}/${APP}_detail.log -->
+	<root level="INFO">
+		<appender-ref ref="DETAIL" />
+	</root>
+	<!--表示把>=WARN级别的日志都输出到控制台-->
+	<root level="INFO">
+		<appender-ref ref="CONSOLE" />
+	</root>
+</configuration>

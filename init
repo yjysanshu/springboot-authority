@@ -2,7 +2,8 @@
 
 echo "   "
 echo "   [0]develop"
-echo "   [1]prod"
+echo "   [1]testing"
+echo "   [2]prod"
 echo "   "
 
 read -p '请输入当前环境编号:' ENV
@@ -14,24 +15,35 @@ if [ $ENV == 0 ]; then
     rm src/main/java/com/temp/Application.java
     echo "package com.temp;" >> src/main/java/com/temp/Application.java
     echo >> src/main/java/com/temp/Application.java
-    cat src/main/resources/environment/dev/Application.java >> src/main/java/com/temp/Application.java
+    cat src/main/resources/environment/dev/Application.tmp >> src/main/java/com/temp/Application.java
 
     echo "   change: [pom.xml]..."
     rm pom.xml
-    cat src/main/resources/environment/dev/pom.xml >> pom.xml
+    cat src/main/resources/environment/dev/pom.tmp >> pom.xml
 elif [ $ENV == 1 ]; then
 
     echo "   change: [Application.java]..."
     rm src/main/java/com/temp/Application.java
     echo "package com.temp;" >> src/main/java/com/temp/Application.java
     echo >> src/main/java/com/temp/Application.java
-    cat src/main/resources/environment/prod/Application.java >> src/main/java/com/temp/Application.java
+    cat src/main/resources/environment/testing/Application.tmp >> src/main/java/com/temp/Application.java
 
     echo "   change: [pom.xml]..."
     rm pom.xml
-    cat src/main/resources/environment/prod/pom.xml >> pom.xml
+    cat src/main/resources/environment/testing/pom.tmp >> pom.xml
+elif [ $ENV == 2 ]; then
+
+    echo "   change: [Application.java]..."
+    rm src/main/java/com/temp/Application.java
+    echo "package com.temp;" >> src/main/java/com/temp/Application.java
+    echo >> src/main/java/com/temp/Application.java
+    cat src/main/resources/environment/prod/Application.tmp >> src/main/java/com/temp/Application.java
+
+    echo "   change: [pom.xml]..."
+    rm pom.xml
+    cat src/main/resources/environment/prod/pom.tmp >> pom.xml
 else
     echo "  error options..."
     exit
 fi
-echo "  初始化当前环境--成功...."
+echo "  初始化当前环境--完成...."

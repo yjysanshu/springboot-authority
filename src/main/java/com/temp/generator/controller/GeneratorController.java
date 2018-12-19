@@ -6,13 +6,17 @@ import com.temp.generator.service.TableService;
 import com.temp.generator.util.ActionFactory;
 import com.temp.generator.util.FormatUtil;
 import com.temp.generator.util.StringUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@Api(description = "代码生成模块")
 @RestController
 @RequestMapping("/generator")
 public class GeneratorController {
@@ -20,7 +24,8 @@ public class GeneratorController {
     @Autowired
     private TableService tableService;
 
-    @RequestMapping("/index")
+    @ApiOperation(value = "代码生成器", notes = "根据需要的行为生成代码")
+    @RequestMapping(value = "/index", method = { RequestMethod.POST })
     public Map index(@RequestBody GeneratorRequest request) throws GeneratorException {
         Boolean isTrue = false;
         String tableName;

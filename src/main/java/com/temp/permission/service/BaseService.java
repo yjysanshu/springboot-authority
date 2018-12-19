@@ -68,7 +68,6 @@ public class BaseService {
         if (StringUtil.isBlank(XFor) || "unknown".equalsIgnoreCase(XFor)) {
             XFor = request.getRemoteAddr();
         }
-        ConsoleUtil.formatPrint("666666666");
         ConsoleUtil.formatPrint(XFor);
         return XFor;
     }

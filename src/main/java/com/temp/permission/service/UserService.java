@@ -124,8 +124,8 @@ public class UserService extends BaseService {
      * 重置密码
      * @return -
      */
-    public Integer resetPwd() {
-        User user = new User();
+    public Integer resetPwd(int userId) {
+        User user = mapper.queryOne(userId);
         String password = new BCryptPasswordEncoder().encode(CommonConst.INITIAL_PASSWORD);
         user.setUserPassword(password);
         user.setUserToken(CodeUtil.createUUID());

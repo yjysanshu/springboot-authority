@@ -46,7 +46,7 @@ public class ConfigureController {
     }
 
     @ApiOperation(value = "删除配置信息", notes = "根据ID删除配置信息")
-    @RequestMapping(value = "/del", method = { RequestMethod.POST })
+    @RequestMapping(value = "/del", method = { RequestMethod.DELETE })
     public ResponseData delete(@RequestBody ConfigureDTO container) {
         if (service.delete(container.getId()) > 0) {
             return FormatUtil.success();
