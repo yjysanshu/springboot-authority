@@ -45,7 +45,7 @@ public class ActionController {
     }
 
     @ApiOperation(value = "删除接口URI资源", notes = "根据ID删除URI资源")
-    @RequestMapping(value = "/delete", method = { RequestMethod.POST })
+    @RequestMapping(value = "/delete", method = { RequestMethod.DELETE })
     public ResponseData delete(@RequestBody ParamIdDTO dto) {
         return FormatUtil.success(actionService.delete(dto.getId()));
     }

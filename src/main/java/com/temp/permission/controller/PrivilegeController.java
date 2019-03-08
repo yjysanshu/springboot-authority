@@ -38,7 +38,7 @@ public class PrivilegeController {
     }
 
     @ApiOperation(value = "删除资源权限信息", notes = "根据ID删除资源权限信息")
-    @RequestMapping(value = "/del", method = { RequestMethod.POST })
+    @RequestMapping(value = "/del", method = { RequestMethod.DELETE })
     public ResponseData delete(@RequestBody PrivilegeDTO request) {
         return FormatUtil.fail();
     }
