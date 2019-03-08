@@ -7,7 +7,7 @@ import com.temp.permission.entity.RoleUser;
 import com.temp.permission.entity.User;
 import com.temp.permission.mapper.ResourceMapper;
 import com.temp.permission.mapper.RoleUserMapper;
-import com.temp.permission.model.request.MenuRequest;
+import com.temp.permission.model.request.MenuDTO;
 import com.temp.permission.model.MenuBase;
 import com.temp.permission.model.response.MenuResponse;
 import com.temp.permission.util.ConsoleUtil;
@@ -33,12 +33,12 @@ public class MenuService extends BaseService {
 
     /**
      * 获取显示的菜单
-     * @param request 请求信息
+     * @param dto 请求信息
      * @return 菜单信息
      * @throws IOException json解析错误
      */
-    public List<MenuBase> getList(MenuRequest request) throws IOException {
-        List<Resource> resourceList = mapper.queryList(formatModelDetail(request));
+    public List<MenuBase> getList(MenuDTO dto) throws IOException {
+        List<Resource> resourceList = mapper.queryList(formatModelDetail(dto));
         List<MenuBase> listMenu = new ArrayList<>();
         for (Resource resource : resourceList) {
             MenuBase menu = formatResponse(resource);
@@ -91,6 +91,8 @@ public class MenuService extends BaseService {
      */
     public List<MenuResponse> getMenuByParentId(Integer parentId) throws IOException {
         if (parentId == BackendConst.PARENT_ID_DEFAULT) {
+            Resource resource = new Resource();
+            resource.setResourceType(BackendConst.RESOURCE_TYPE_MENU);
             resourceListAll = mapper.queryList(new Resource());
         }
         List<Resource> listResource;
@@ -98,10 +100,16 @@ public class MenuService extends BaseService {
         if (resourceListAll.size() > 0) {
             listResource = this.getMenuByListAndParentId(parentId);
         } else {
-            listResource = mapper.queryListByParentId(parentId);
+            Map<String, Integer> map = new HashMap<>();
+            map.put("parentId", parentId);
+            map.put("type", BackendConst.RESOURCE_TYPE_MENU);
+            listResource = mapper.queryListByParentIdType(map);
         }
         List<MenuResponse> list = new ArrayList<>();
         for (Resource resource : listResource) {
+            if (resource.getResourceType() == BackendConst.RESOURCE_TYPE_API) {
+                continue;
+            }
             MenuResponse menu = formatResponse(resource);
             menu.setChildren(this.getMenuByParentId(menu.getId()));
             list.add(menu);
@@ -156,7 +164,7 @@ public class MenuService extends BaseService {
         return menu.getChecked();
     }
 
-    public List<Resource> getByPrivilegeRoleIdAndType(Integer roleId, String resourceType) {
+    public List<Resource> getPrivilegeListByRoleIdAndType(Integer roleId, String resourceType) {
         Map<String, Object> map = new HashMap<>();
         map.put("roleId", roleId);
         map.put("resourceType", resourceType);
@@ -173,7 +181,7 @@ public class MenuService extends BaseService {
      * @return 受影响的行数
      * @throws JsonProcessingException 解析JSON错误
      */
-    public Integer save(MenuRequest menu) throws JsonProcessingException {
+    public Integer save(MenuDTO menu) throws JsonProcessingException {
         Resource resource;
         if (menu.getId() != null) {
             resource = mapper.queryOne(menu.getId());
@@ -213,14 +221,16 @@ public class MenuService extends BaseService {
         menu.setIcon((String) map.get("icon"));
         menu.setType((String) map.get("type"));
         menu.setChecked(true);
+        menu.setChildren(new ArrayList<>());
         return menu;
     }
 
-    private Resource formatModelDetail(MenuRequest menu) {
+    private Resource formatModelDetail(MenuDTO menu) {
         Resource resource = new Resource();
         resource.setResourceId(menu.getId());
         resource.setResourceParentId(menu.getParentId());
         resource.setResourceTarget(menu.getUrl());
+        resource.setResourceType(BackendConst.RESOURCE_TYPE_MENU);
         return resource;
     }
 }

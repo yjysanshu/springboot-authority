@@ -1,10 +1,11 @@
 package com.temp.generator.controller;
 
+import com.temp.common.model.ResponseData;
+import com.temp.common.util.FormatUtil;
 import com.temp.generator.execption.GeneratorException;
 import com.temp.generator.models.request.GeneratorRequest;
 import com.temp.generator.service.TableService;
 import com.temp.generator.util.ActionFactory;
-import com.temp.generator.util.FormatUtil;
 import com.temp.generator.util.StringUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +27,7 @@ public class GeneratorController {
 
     @ApiOperation(value = "代码生成器", notes = "根据需要的行为生成代码")
     @RequestMapping(value = "/index", method = { RequestMethod.POST })
-    public Map index(@RequestBody GeneratorRequest request) throws GeneratorException {
+    public ResponseData index(@RequestBody GeneratorRequest request) throws GeneratorException {
         Boolean isTrue = false;
         String tableName;
         if (request.isDeletePrefix()) {

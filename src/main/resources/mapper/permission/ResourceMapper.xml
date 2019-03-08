@@ -63,6 +63,13 @@
         WHERE resource_id = #{id,jdbcType=INTEGER}
     </select>
 
+    <select id="queryListByType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+          admin_resource.*
+        FROM admin_resource
+        WHERE resource_type = #{type, jdbcType=INTEGER}
+    </select>
+
     <select id="queryAllByType" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
         admin_resource.*, admin_role.*
@@ -78,6 +85,15 @@
         from
         admin_resource
         where resource_parent_id = #{parentId,jdbcType=INTEGER}
+        order by resource_id asc
+    </select>
+
+    <select id="queryListByParentIdType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from
+        admin_resource
+        where resource_parent_id = #{parentId,jdbcType=INTEGER} AND resource_type = #{parentId,jdbcType=INTEGER}
         order by resource_id asc
     </select>
 

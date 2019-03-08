@@ -26,6 +26,8 @@ public class CustomException implements HandlerExceptionResolver {
             String message = e.getMessage() == null ? "系统异常" : e.getMessage();
             map.put("message", message);
         }
+        e.printStackTrace();
+        ConsoleUtil.formatPrint(e.getStackTrace());
         ConsoleUtil.formatPrint(e.getMessage());
         ConsoleUtil.formatPrint(e.getCause());
         mv.addAllObjects(map);

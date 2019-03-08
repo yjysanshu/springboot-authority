@@ -10,6 +10,10 @@
                 <class-a>java.lang.String</class-a>
                 <class-b>java.util.Date</class-b>
             </converter>
+            <converter type="com.temp.common.util.convert.DozerResourceConverter" >
+                <class-a>com.temp.permission.entity.Resource</class-a>
+                <class-b>com.temp.permission.model.dto.ResourceDTO</class-b>
+            </converter>
         </custom-converters>
     </configuration>
 

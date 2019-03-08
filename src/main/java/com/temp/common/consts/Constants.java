@@ -8,12 +8,12 @@ public enum Constants {
     LOGIN_ERROR(2, "需要登录"),
 
     //登录异常
-    LOGIN_FAIL(10000, "你的请求参数异常"),
+    LOGIN_FAIL(10000, "账户登录失败"),
     LOGIN_USER_DISABLE(10001, "登录失败"),
-    LOGIN_PARAMS_ERROR(10002, "账户被禁用，登录失败，请联系管理员"),
+    LOGIN_PARAMS_ERROR(10002, "用户名或密码输入错误，登录失败"),
 
     //参数异常errorCode
-    PARAMS_ERROR(20000, "用户名或密码输入错误，登录失败"),
+    PARAMS_ERROR(20000, "参数异常，请重新尝试"),
 
     //数据库操作异常
     DB_DELETE_ERROR(30001, "没有删除数据，删除失败");

@@ -2,7 +2,7 @@ package com.temp.permission.model.request;
 
 import java.util.List;
 
-public class PrivilegeRequest extends BaseRequest {
+public class PrivilegeDTO extends BaseRequest {
 	private Integer roleId;
 	private String resourceType;
 	private List<Integer> resourceIds;

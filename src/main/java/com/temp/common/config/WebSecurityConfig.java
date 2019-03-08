@@ -96,7 +96,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     out.close();
                 })
                 .and().logout().permitAll()
-                .and().csrf().disable().exceptionHandling().accessDeniedHandler(authenticationAccessDeniedHandler);
+                .and().csrf().disable().exceptionHandling().accessDeniedHandler(authenticationAccessDeniedHandler)
+                .and().cors();
     }
 
     public static OauthUser getCurrentFilterUser() {

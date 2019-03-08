@@ -6,7 +6,7 @@ import com.temp.permission.entity.Resource;
 import com.temp.permission.entity.Role;
 import com.temp.permission.entity.RoleUser;
 import com.temp.permission.mapper.PrivilegeMapper;
-import com.temp.permission.model.request.PrivilegeRequest;
+import com.temp.permission.model.request.PrivilegeDTO;
 import com.temp.permission.model.response.MenuResponse;
 import com.temp.permission.util.ConsoleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,24 +30,6 @@ public class PrivilegeService {
 
     @Autowired
     private RoleUserService roleUserService;
-
-//    public List<PrivilegeResponse> getList(PrivilegeRequest request) {
-//        Privilege privilegeSearch = formatModelDetail(request);
-//        Map<String, Object> map = new HashMap<>();        map.put("privilege", privilegeSearch);
-//        map.put("page", request.getCurrentPage());
-//        map.put("size", request.getLimit());        List<Privilege> privilegeList = mapper.queryList(privilegeSearch);
-//        List<PrivilegeResponse> list = new ArrayList<>();
-//        for (Privilege privilege : privilegeList) {
-//            PrivilegeResponse privilegeResponse = formatResponseDetail(privilege);
-//            list.add(privilegeResponse);
-//        }
-//        return list;
-//    }
-//
-//    public Integer getTotal(PrivilegeRequest request) {
-//        Privilege privilegeSearch = formatModelDetail(request);
-//        return mapper.queryCount(privilegeSearch);
-//    }
 
     /**
      * 获取角色的菜单
@@ -131,7 +113,7 @@ public class PrivilegeService {
      * @param roleIds 角色ID
      * @return array
      */
-    public List<MenuResponse> checkMenuPrivilege(List<MenuResponse> menuList, List<Integer> roleIds) {
+    private List<MenuResponse> checkMenuPrivilege(List<MenuResponse> menuList, List<Integer> roleIds) {
         for (MenuResponse menu : menuList) {
             menu.setChecked(this.hasRoleListPrivilege(roleIds, menu.getId()));
             menu.setChildren(this.checkMenuPrivilege(menu.getChildren(), roleIds));
@@ -153,37 +135,43 @@ public class PrivilegeService {
     }
 
     @Transactional
-    public Boolean savePrivilege(PrivilegeRequest request) {
+    public Boolean savePrivilege(PrivilegeDTO dto) {
         //判断当前用户是否有权限保存角色和资源的关联关系
-        this.checkOperatorPrivilege(request.getRoleId(), request.getResourceIds());
+        this.checkOperatorPrivilege(dto.getRoleId(), dto.getResourceIds());
 
         // 获取当前角色的权限数组
-        List<Resource> listOld = menuService.getByPrivilegeRoleIdAndType(request.getRoleId(), request.getResourceType());
+        List<Resource> listOld = menuService.getPrivilegeListByRoleIdAndType(dto.getRoleId(), dto.getResourceType());
 
         List<Integer> resourceIds = new ArrayList<>();
         for (Resource resource : listOld) {
             resourceIds.add(resource.getResourceId());
         }
         // 删除当前角色的权限
-        this.deleteByRoleAndResource(resourceIds, request.getRoleId());
+        this.deleteByRoleAndResource(resourceIds, dto.getRoleId());
 
         // 重建新的权限关系
-        for (Integer resourceId : request.getResourceIds()) {
+        for (Integer resourceId : dto.getResourceIds()) {
             Privilege privilege = new Privilege();
-            privilege.setPrivilegeRoleId(request.getRoleId());
+            privilege.setPrivilegeRoleId(dto.getRoleId());
             privilege.setPrivilegeResourceId(resourceId);
             privilege.setPrivilegeCreateAt(new Date());
             mapper.add(privilege);
         }
 
         // 去除后代角色与当前角色的资源差集
-        this.removeDescendantResource(request.getRoleId(), request.getResourceType(), request.getResourceIds());
+        this.removeDescendantResource(dto.getRoleId(), dto.getResourceType(), dto.getResourceIds());
 
         return true;
 
     }
 
-    public Boolean deleteByRoleAndResource(List<Integer> resourceIds, Integer roleId) {
+    /**
+     * 根据角色ID和权限IDs删除拥有的权限
+     * @param resourceIds 权限IDs
+     * @param roleId 角色ID
+     * @return list
+     */
+    private Boolean deleteByRoleAndResource(List<Integer> resourceIds, Integer roleId) {
         if (resourceIds.size() <= 0 || roleId == null) {
             return true;
         }
@@ -193,7 +181,13 @@ public class PrivilegeService {
         return mapper.deleteByRoleIdAndResourceIds(map) > 0;
     }
 
-    public void removeDescendantResource(Integer roleId, String resourceType, List<Integer> resourceIds) {
+    /**
+     * 去除后代角色与当前角色的权限差集
+     * @param roleId 角色ID
+     * @param resourceType 角色类型
+     * @param resourceIds 资源IDs
+     */
+    private void removeDescendantResource(Integer roleId, String resourceType, List<Integer> resourceIds) {
         List<Role> childrenRolesList = roleService.getListByParentId(roleId);
 
         for (Role adminRole : childrenRolesList) {
@@ -210,7 +204,13 @@ public class PrivilegeService {
         }
     }
 
-    public Boolean checkOperatorPrivilege(Integer roleId, List<Integer> resourceIds) {
+    /**
+     * 校验可操作的权限
+     * @param roleId 角色ID
+     * @param resourceIds 权限IDs
+     * @return boolean
+     */
+    private Boolean checkOperatorPrivilege(Integer roleId, List<Integer> resourceIds) {
         List<RoleUser> listRoleUser = roleUserService.getRolesByUserId(1);
         Role ancestorRole = roleUserService.isAncestorRole(roleId, listRoleUser);
         if (ancestorRole == null) {
@@ -221,12 +221,11 @@ public class PrivilegeService {
 
     /**
      * 判断资源是否都存在于给定角色的可操作资源列表
-     * @param roleId
-     * @param listId
-     * @return
+     * @param roleId 角色ID
+     * @param listId 权限IDs
+     * @return boolean
      */
-    public Boolean judgeResourceOptional(Integer roleId, List<Integer> listId)
-    {
+    private Boolean judgeResourceOptional(Integer roleId, List<Integer> listId) {
         List<Privilege> list = mapper.queryListByRoleId(roleId);
 
         // 判断资源是否都存在于给定角色的可操作资源列表
@@ -239,51 +238,4 @@ public class PrivilegeService {
         }
         return true;
     }
-
-//    public Integer save(PrivilegeRequest request) {
-//        Privilege privilege;
-//        if (request.getRoleId() != null) {
-//            privilege = mapper.queryOne(request.getRoleId());
-//        } else {
-//            privilege = new Privilege();
-//            privilege.setPrivilegeCreateAt(new Date());
-//        }
-//        privilege.setPrivilegeId(request.getId());
-//        privilege.setPrivilegeRoleId(request.getRoleId());
-//        privilege.setPrivilegeCreateBy(request.getCreateBy());
-//        privilege.setPrivilegeUpdateBy(request.getUpdateBy());
-//        if (request.getId() != null) {
-//            return mapper.update(privilege);
-//        } else {
-//            return mapper.add(privilege);
-//        }
-//    }
-//
-//    public Integer delete(Integer id) {
-//        return mapper.delete(id);
-//    }
-//
-//    private PrivilegeResponse formatResponseDetail(Privilege privilege) {
-//        PrivilegeResponse response = new PrivilegeResponse();
-//        response.setId(privilege.getPrivilegeId());
-//        response.setId(privilege.getPrivilegeId());
-//        response.setRoleId(privilege.getPrivilegeRoleId());
-//        response.setCreateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(privilege.getPrivilegeCreateAt()));
-//        response.setUpdateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(privilege.getPrivilegeUpdateAt()));
-//        response.setCreateBy(privilege.getPrivilegeCreateBy());
-//        response.setUpdateBy(privilege.getPrivilegeUpdateBy());
-//        return response;
-//    }
-//
-//    private Privilege formatModelDetail(PrivilegeRequest request) {
-//        Privilege privilege = new Privilege();
-//        privilege.setPrivilegeId(request.getId());
-//        privilege.setPrivilegeId(request.getId());
-//        privilege.setPrivilegeRoleId(request.getRoleId());
-//        privilege.setPrivilegeCreateAt(request.getCreateAt());
-//        privilege.setPrivilegeUpdateAt(request.getUpdateAt());
-//        privilege.setPrivilegeCreateBy(request.getCreateBy());
-//        privilege.setPrivilegeUpdateBy(request.getUpdateBy());
-//        return privilege;
-//    }
 }

@@ -1,8 +1,9 @@
 package com.temp.generator.controller;
 
+import com.temp.common.model.ResponseData;
+import com.temp.common.util.FormatUtil;
 import com.temp.generator.models.request.DatabaseRequest;
 import com.temp.generator.service.DatabaseService;
-import com.temp.generator.util.FormatUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,14 +25,14 @@ public class DatabaseController {
 
     @ApiOperation(value = "数据库中数据表列表", notes = "根据数据库名查询数据表列表")
     @RequestMapping(value = "/index", method = { RequestMethod.POST })
-    public Map index(@RequestBody DatabaseRequest request) {
+    public ResponseData index(@RequestBody DatabaseRequest request) {
         List list = databaseService.getDatabaseInfo(request.getDatabaseName());
         return FormatUtil.success(FormatUtil.formatList(list, list.size()));
     }
 
     @ApiOperation(value = "数据库列表", notes = "查询所有的数据库")
     @RequestMapping(value = "/list", method = { RequestMethod.GET })
-    public Map list() {
+    public ResponseData list() {
         return FormatUtil.success(databaseService.getDatabases());
     }
 }

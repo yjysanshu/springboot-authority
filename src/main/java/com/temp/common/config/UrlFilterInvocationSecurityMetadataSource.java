@@ -58,6 +58,7 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
             }
         }
         ConsoleUtil.formatPrint("request-url: " + requestUrl);
+        //查询有角色关联了的接口
         List<Resource> resourcesList = resourceService.getAllByType(BackendConst.RESOURCE_TYPE_API);
         for (Resource resource : resourcesList) {
             List<Role> roleList = resource.getRoleList();

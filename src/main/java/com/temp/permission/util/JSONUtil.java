@@ -2,7 +2,7 @@ package com.temp.permission.util;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.temp.permission.model.request.MenuRequest;
+import com.temp.permission.model.request.MenuDTO;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -38,7 +38,7 @@ public class JSONUtil {
      * @return 字符串
      * @throws JsonProcessingException -
      */
-    public static String menuToJson(MenuRequest menu) throws JsonProcessingException {
+    public static String menuToJson(MenuDTO menu) throws JsonProcessingException {
         ObjectMapper objectMapper=new ObjectMapper();
         Map<String, Object> map = new HashMap<>();
         map.put("title", menu.getTitle());

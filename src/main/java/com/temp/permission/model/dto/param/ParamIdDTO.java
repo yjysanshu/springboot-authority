@@ -1,4 +1,4 @@
-package com.temp.permission.dto.param;
+package com.temp.permission.model.dto.param;
 
 public class ParamIdDTO {
     private Integer id;

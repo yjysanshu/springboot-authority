@@ -5,7 +5,7 @@ package com.temp.permission.consts;
  */
 public class BackendConst {
     //资源类型
-    public static final int RESOURCE_TYPE_MENU = 1;
+    public static final int RESOURCE_TYPE_MENU = 0;
     public static final int RESOURCE_TYPE_API = 1;
 
     //资源菜单父级ID

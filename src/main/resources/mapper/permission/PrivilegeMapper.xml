@@ -44,8 +44,8 @@
     </select>
 
     <delete id="deleteByRoleIdAndResourceIds">
-        delete from admin_privilege
-        where privilege_resource_id IN
+        DELETE FROM admin_privilege
+        WHERE privilege_resource_id IN
         <foreach item="item" index="index" collection="resourceIds" open="(" separator="," close=")">
             #{item}
         </foreach>

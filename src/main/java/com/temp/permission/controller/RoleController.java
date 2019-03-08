@@ -4,7 +4,7 @@ import com.temp.common.model.ResponseData;
 import com.temp.permission.model.request.RoleRequest;
 import com.temp.permission.model.request.RoleUserRequest;
 import com.temp.common.util.FormatUtil;
-import com.temp.permission.model.request.PrivilegeRequest;
+import com.temp.permission.model.request.PrivilegeDTO;
 import com.temp.permission.service.PrivilegeService;
 import com.temp.permission.service.RoleService;
 import com.temp.permission.service.RoleUserService;
@@ -57,6 +57,12 @@ public class RoleController {
         return FormatUtil.success(roleUserService.getRoleUser(request.getId()));
     }
 
+    @ApiOperation(value = "角色的资源信息", notes = "根据ID获取角色的资源")
+    @RequestMapping(value = "/get-resource", method = { RequestMethod.POST })
+    public ResponseData getResource(@RequestBody RoleRequest request) {
+        return FormatUtil.success(roleUserService.getRoleResource(request.getId()));
+    }
+
     @ApiOperation(value = "新增或修改角色信息", notes = "根据ID确定是否存在角色信息，进行新增或修改")
     @RequestMapping(value = "/save", method = { RequestMethod.POST })
     public ResponseData save(@RequestBody RoleRequest request) {
@@ -72,8 +78,8 @@ public class RoleController {
 
     @ApiOperation(value = "保存权限", notes = "保存权限")
     @RequestMapping(value = "/save-privilege", method = { RequestMethod.POST })
-    public ResponseData savePrivilege(@RequestBody PrivilegeRequest request) {
-        return FormatUtil.success(privilegeService.savePrivilege(request));
+    public ResponseData savePrivilege(@RequestBody PrivilegeDTO dto) {
+        return FormatUtil.success(privilegeService.savePrivilege(dto));
     }
 
     @ApiOperation(value = "删除角色信息", notes = "根据ID删除角色信息")

@@ -3,7 +3,7 @@ package com.temp.permission.controller;
 import com.temp.common.consts.Constants;
 import com.temp.common.model.ResponseData;
 import com.temp.common.util.FormatUtil;
-import com.temp.permission.dto.param.ParamIdDTO;
+import com.temp.permission.model.dto.param.ParamIdDTO;
 import com.temp.permission.model.request.ChangeRequest;
 import com.temp.permission.model.request.UserRequest;
 import com.temp.permission.model.response.MenuResponse;
