@@ -44,13 +44,22 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
 
         String token = request.getHeader("X-TOKEN");
 
+        //根据前端的token来验证用户的登陆信息
         if (token != null) {
             OauthUser oauthUser = (OauthUser) this.loginService.loadUserByToken(token);
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     oauthUser, null, oauthUser.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(
                     request));
+            //把用户设置到权限验证的上下文中
             SecurityContextHolder.getContext().setAuthentication(authentication);
+            //如果是超级管理员直接返回
+            List<Role> list = oauthUser.getResourceList();
+            for (Role role : list) {
+                if (role.getRoleId() == BackendConst.ROLE_SUPER_ADMIN) {
+                    return null;
+                }
+            }
             ConsoleUtil.formatPrint(authentication);
         } else {
             if (request.getMethod().equals("OPTIONS")) {
@@ -58,7 +67,9 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
             }
         }
         ConsoleUtil.formatPrint("request-url: " + requestUrl);
-        //查询有角色关联了的接口
+
+        //todo 这里应该可以根据接口来查询需要的权限？有空再改
+        //查询有角色关联了的接口，这样的接口说明其是需要权限验证的
         List<Resource> resourcesList = resourceService.getAllByType(BackendConst.RESOURCE_TYPE_API);
         for (Resource resource : resourcesList) {
             List<Role> roleList = resource.getRoleList();
@@ -68,7 +79,7 @@ public class UrlFilterInvocationSecurityMetadataSource implements FilterInvocati
                 int size = roleList.size();
                 String[] values = new String[size];
                 for (int i = 0; i < size; i++) {
-                    values[i] = roleList.get(i).getRoleName();
+                    values[i] = roleList.get(i).getRoleName();  //拥有这个接口权限的角色，赋值到value
                 }
                 ConsoleUtil.formatPrint("array value: " + values.toString());
                 return SecurityConfig.createList(values);
