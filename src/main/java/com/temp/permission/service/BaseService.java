@@ -37,7 +37,7 @@ public class BaseService {
         return oauthUserMapper.queryOneByToken(token);
     }
 
-    public String getIpAddress() {
+    String getIpAddress() {
         String Xip = request.getHeader("X-Real-IP");
         String XFor = request.getHeader("X-Forwarded-For");
         if(StringUtil.isNotEmpty(XFor) && !"unKnown".equalsIgnoreCase(XFor)){

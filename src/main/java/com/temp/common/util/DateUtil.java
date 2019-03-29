@@ -1,12 +1,21 @@
 package com.temp.common.util;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class DateUtil {
+    private static SimpleDateFormat format;
+
+    static {
+        format = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
     public static String getYmd(Date date) {
-        return (new SimpleDateFormat("yyyy-MM-dd")).format(date);
+        return format.format(date);
     }
 
     /**
@@ -14,7 +23,7 @@ public class DateUtil {
      * @return string
      */
     public static String getYmd() {
-        return (new SimpleDateFormat("yyyy-MM-dd")).format(new Date());
+        return format.format(new Date());
     }
 
     /**
@@ -22,7 +31,7 @@ public class DateUtil {
      * @return string
      */
     public static String getTYmd() {
-        return (new SimpleDateFormat("yyyyMMdd")).format(new Date());
+        return format.format(new Date());
     }
 
     /**
@@ -30,18 +39,16 @@ public class DateUtil {
      * @return string
      */
     public static String getTYm() {
-        return (new SimpleDateFormat("yyyyMM")).format(new Date());
+        return format.format(new Date());
     }
 
     public static String getYmd(int num) {
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, num);
-        SimpleDateFormat dft = new SimpleDateFormat("yyyy-MM-dd");
-        return dft.format(cal.getTime());
+        return format.format(cal.getTime());
     }
 
     public static String nextDay(String str) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Calendar calendar = Calendar.getInstance();
         int year = Integer.parseInt(str.substring(0, 4));
         String monthsString = str.substring(5, 7);
@@ -60,7 +67,7 @@ public class DateUtil {
         }
         calendar.set(year, month, day);
         calendar.add(Calendar.DATE, 1);
-        return sdf.format(calendar.getTime());
+        return format.format(calendar.getTime());
     }
 
     public static String getYm(Date date) {
@@ -106,13 +113,13 @@ public class DateUtil {
     public static String calcDayStart(Date date) {
         if (date == null) return null;
 
-        return (new SimpleDateFormat("yyyy-MM-dd 00:00:00")).format(date);
+        return format.format(date) + " 00:00:00";
     }
 
     public static String calcDayEnd(Date date) {
         if (date == null) return null;
 
-        return (new SimpleDateFormat("yyyy-MM-dd 23:59:59")).format(date);
+        return format.format(date) + " 23:59:59";
     }
 
     public static String calcDayStart(String date) {
@@ -125,5 +132,48 @@ public class DateUtil {
         if (date == null) return null;
 
         return date + " 23:59:59";
+    }
+
+    /**
+     * 计算两个日期之间的差值
+     * @param start 开始日期
+     * @param end 结束日期
+     * @return 相差的天数
+     */
+    public static Integer calcDiffDay(String start, String end) {
+        Date startDate = null;
+        Date endDate = null;
+        try {
+            startDate = format.parse(start);
+            endDate = format.parse(end);
+        } catch (Exception e) {
+            // 日期型字符串格式错误
+            System.out.println("日期型字符串格式错误");
+            return 0;
+        }
+        return (int) ((endDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000));
+    }
+
+    /**
+     * 获取连续的年月日时间
+     * @param start 开始时间
+     * @param end 结束时间
+     * @return list
+     */
+    public static List<String> getContinuousDate(String start, String end) {
+        List<String> dateList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(format.parse(start));
+        } catch (ParseException e) {
+            e.printStackTrace();
+            System.out.println("日期型字符串格式错误");
+        }
+        int day = calcDiffDay(start, end);
+        for (int i = 0; i <= day; i++) {
+            calendar.add(Calendar.DAY_OF_MONTH, i == 0 ? 0 : 1);
+            dateList.add(format.format(calendar.getTime()));
+        }
+        return dateList;
     }
 }
