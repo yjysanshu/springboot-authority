@@ -9,8 +9,6 @@ public class RoleResponse extends BaseResponse {
 	private String desc;
 	private Integer status;
 	private Integer type;
-	private String createBy;
-	private String updateBy;
 
 	private Integer level;
 	private Boolean isExpand;
@@ -63,22 +61,6 @@ public class RoleResponse extends BaseResponse {
 
 	public void setType(Integer type) {
 		this.type = type;
-	}
-
-	public String getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public String getUpdateBy() {
-		return this.updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
 	}
 
 	public Integer getLevel() {

@@ -11,12 +11,10 @@
         <result column="role_type" property="roleType" jdbcType="INTEGER" />
         <result column="role_create_at" property="roleCreateAt" jdbcType="TIMESTAMP" />
         <result column="role_update_at" property="roleUpdateAt" jdbcType="TIMESTAMP" />
-        <result column="role_create_by" property="roleCreateBy" jdbcType="VARCHAR" />
-        <result column="role_update_by" property="roleUpdateBy" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="Base_Column_List" >
-        role_id, role_parent_id, role_name, role_desc, role_status, role_type, role_create_at, role_update_at, role_create_by, role_update_by
+        role_id, role_parent_id, role_name, role_desc, role_status, role_type, role_create_at, role_update_at
     </sql>
 
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.Role">
@@ -47,12 +45,6 @@
             </if>
             <if test="roleUpdateAt != null" >
                 AND role_update_at = #{roleUpdateAt,jdbcType=TIMESTAMP}
-            </if>
-            <if test="roleCreateBy != null" >
-                AND role_create_by = #{roleCreateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="roleUpdateBy != null" >
-                AND role_update_by = #{roleUpdateBy,jdbcType=VARCHAR}
             </if>
         </where>
         ORDER BY role_id DESC
@@ -87,12 +79,6 @@
             <if test="role.roleUpdateAt != null" >
                 AND role_update_at = #{role.roleUpdateAt,jdbcType=TIMESTAMP}
             </if>
-            <if test="role.roleCreateBy != null" >
-                AND role_create_by = #{role.roleCreateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="role.roleUpdateBy != null" >
-                AND role_update_by = #{role.roleUpdateBy,jdbcType=VARCHAR}
-            </if>
         </where>
         ORDER BY role_id DESC LIMIT ${(page - 1) * size}, ${size}
     </select>
@@ -123,12 +109,6 @@
             </if>
             <if test="roleUpdateAt != null" >
                 AND role_update_at = #{roleUpdateAt,jdbcType=TIMESTAMP}
-            </if>
-            <if test="roleCreateBy != null" >
-                AND role_create_by = #{roleCreateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="roleUpdateBy != null" >
-                AND role_update_by = #{roleUpdateBy,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
@@ -189,12 +169,6 @@
             <if test="roleUpdateAt != null" >
                 role_update_at,
             </if>
-            <if test="roleCreateBy != null" >
-                role_create_by,
-            </if>
-            <if test="roleUpdateBy != null" >
-                role_update_by,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="roleId != null" >
@@ -253,12 +227,6 @@
             </if>
             <if test="roleUpdateAt != null" >
                 role_update_at = #{roleUpdateAt,jdbcType=TIMESTAMP},
-            </if>
-            <if test="roleCreateBy != null" >
-                role_create_by = #{roleCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="roleUpdateBy != null" >
-                role_update_by = #{roleUpdateBy,jdbcType=VARCHAR},
             </if>
         </set>
         where role_id = #{roleId,jdbcType=INTEGER}

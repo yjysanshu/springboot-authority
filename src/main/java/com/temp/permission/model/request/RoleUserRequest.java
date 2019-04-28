@@ -6,8 +6,6 @@ public class RoleUserRequest extends BaseRequest {
 	private Integer id;
 	private Integer roleId;
 	private Integer userId;
-	private String createBy;
-	private String updateBy;
 
 	private List<Integer> list;
 
@@ -33,22 +31,6 @@ public class RoleUserRequest extends BaseRequest {
 
 	public void setUserId(Integer userId) {
 		this.userId = userId;
-	}
-
-	public String getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public String getUpdateBy() {
-		return this.updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
 	}
 
 	public List<Integer> getList() {

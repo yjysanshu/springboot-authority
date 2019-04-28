@@ -14,8 +14,6 @@ public class UserResponse extends BaseResponse {
 	private Integer loginCount;
 	private String lastIp;
 	private Integer status;
-	private String createBy;
-	private String updateBy;
 
 	private Map<Integer, String> roles = new HashMap<>();
 
@@ -97,22 +95,6 @@ public class UserResponse extends BaseResponse {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public String getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public String getUpdateBy() {
-		return this.updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
 	}
 
 	public Map<Integer, String> getRoles() {

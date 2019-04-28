@@ -8,8 +8,6 @@
         <result column="role_user_user_id" property="roleUserUserId" jdbcType="INTEGER" />
         <result column="role_user_create_at" property="roleUserCreateAt" jdbcType="TIMESTAMP" />
         <result column="role_user_update_at" property="roleUserUpdateAt" jdbcType="TIMESTAMP" />
-        <result column="role_user_create_by" property="roleUserCreateBy" jdbcType="VARCHAR" />
-        <result column="role_user_update_by" property="roleUserUpdateBy" jdbcType="VARCHAR" />
 
         <collection property="user" ofType="com.temp.permission.entity.User">
             <id column="user_id" property="userId" jdbcType="INTEGER" />
@@ -22,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        role_user_id, role_user_role_id, role_user_user_id, role_user_create_at, role_user_update_at, role_user_create_by, role_user_update_by
+        role_user_id, role_user_role_id, role_user_user_id, role_user_create_at, role_user_update_at
     </sql>
 
     <select id="queryAllByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -85,12 +83,6 @@
             <if test="roleUserUpdateAt != null" >
                 role_user_update_at,
             </if>
-            <if test="roleUserCreateBy != null" >
-                role_user_create_by,
-            </if>
-            <if test="roleUserUpdateBy != null" >
-                role_user_update_by,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="roleUserId != null" >
@@ -131,12 +123,6 @@
             </if>
             <if test="roleUserUpdateAt != null" >
                 role_user_update_at = #{roleUserUpdateAt,jdbcType=TIMESTAMP},
-            </if>
-            <if test="roleUserCreateBy != null" >
-                role_user_create_by = #{roleUserCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="roleUserUpdateBy != null" >
-                role_user_update_by = #{roleUserUpdateBy,jdbcType=VARCHAR},
             </if>
         </set>
         where role_user_id = #{roleUserId,jdbcType=INTEGER}

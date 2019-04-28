@@ -10,8 +10,6 @@
         <result column="resource_data" property="resourceData" jdbcType="VARCHAR" />
         <result column="resource_create_at" property="resourceCreateAt" jdbcType="TIMESTAMP" />
         <result column="resource_update_at" property="resourceUpdateAt" jdbcType="TIMESTAMP" />
-        <result column="resource_create_by" property="resourceCreateBy" jdbcType="VARCHAR" />
-        <result column="resource_update_by" property="resourceUpdateBy" jdbcType="VARCHAR" />
 
         <collection property="roleList" ofType="com.temp.permission.entity.Role">
             <id column="role_id" property="roleId" jdbcType="INTEGER" />
@@ -45,12 +43,6 @@
             </if>
             <if test="resourceUpdateAt != null" >
                 AND resource_update_at = #{resourceUpdateAt,jdbcType=TIMESTAMP}
-            </if>
-            <if test="resourceCreateBy != null" >
-                AND resource_create_by = #{resourceCreateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="resourceUpdateBy != null" >
-                AND resource_update_by = #{resourceUpdateBy,jdbcType=VARCHAR}
             </if>
         </where>
         order by resource_id asc
@@ -137,12 +129,6 @@
             <if test="resourceUpdateAt != null" >
                 resource_update_at,
             </if>
-            <if test="resourceCreateBy != null" >
-                resource_create_by,
-            </if>
-            <if test="resourceUpdateBy != null" >
-                resource_update_by,
-            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
             <if test="resourceId != null" >
@@ -195,12 +181,6 @@
             </if>
             <if test="resourceUpdateAt != null" >
                 resource_update_at = #{resourceUpdateAt,jdbcType=TIMESTAMP},
-            </if>
-            <if test="resourceCreateBy != null" >
-                resource_create_by = #{resourceCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="resourceUpdateBy != null" >
-                resource_update_by = #{resourceUpdateBy,jdbcType=VARCHAR},
             </if>
         </set>
         where resource_id = #{resourceId,jdbcType=INTEGER}

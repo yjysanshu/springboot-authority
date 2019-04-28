@@ -7,8 +7,6 @@ public class RoleRequest extends BaseRequest {
 	private String desc;
 	private Integer status;
 	private Integer type;
-	private String createBy;
-	private String updateBy;
 
 	public Integer getId() {
 		return this.id;
@@ -56,21 +54,5 @@ public class RoleRequest extends BaseRequest {
 
 	public void setType(Integer type) {
 		this.type = type;
-	}
-
-	public String getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public String getUpdateBy() {
-		return this.updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
 	}
 }

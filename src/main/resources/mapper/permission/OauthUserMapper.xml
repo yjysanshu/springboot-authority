@@ -19,7 +19,7 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        user_id, user_phone, user_name, user_email, user_avatar, user_password, user_token, user_status, user_create_at, user_update_at, user_create_by, user_update_by
+        user_id, user_phone, user_name, user_email, user_avatar, user_password, user_token, user_status, user_create_at, user_update_at
     </sql>
 
     <!--查询用户信息-->

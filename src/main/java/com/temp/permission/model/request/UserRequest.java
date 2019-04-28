@@ -13,8 +13,6 @@ public class UserRequest extends BaseRequest {
 	private Integer loginCount;
 	private String lastIp;
 	private Integer status;
-	private String createBy;
-	private String updateBy;
 
 	private List<Integer> roles;
 
@@ -96,22 +94,6 @@ public class UserRequest extends BaseRequest {
 
 	public void setStatus(Integer status) {
 		this.status = status;
-	}
-
-	public String getCreateBy() {
-		return this.createBy;
-	}
-
-	public void setCreateBy(String createBy) {
-		this.createBy = createBy;
-	}
-
-	public String getUpdateBy() {
-		return this.updateBy;
-	}
-
-	public void setUpdateBy(String updateBy) {
-		this.updateBy = updateBy;
 	}
 
 	public List<Integer> getRoles() {

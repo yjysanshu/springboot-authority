@@ -8,8 +8,6 @@
         <result column="privilege_role_id" property="privilegeRoleId" jdbcType="INTEGER" />
         <result column="privilege_create_at" property="privilegeCreateAt" jdbcType="TIMESTAMP" />
         <result column="privilege_update_at" property="privilegeUpdateAt" jdbcType="TIMESTAMP" />
-        <result column="privilege_create_by" property="privilegeCreateBy" jdbcType="VARCHAR" />
-        <result column="privilege_update_by" property="privilegeUpdateBy" jdbcType="VARCHAR" />
 
         <collection property="role" ofType="com.temp.permission.entity.Role">
             <id column="role_id" property="roleId" jdbcType="INTEGER" />
@@ -22,7 +20,7 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        privilege_id, privilege_resource_id, privilege_role_id, privilege_create_at, privilege_update_at, privilege_create_by, privilege_update_by
+        privilege_id, privilege_resource_id, privilege_role_id, privilege_create_at, privilege_update_at
     </sql>
 
     <select id="queryListByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
@@ -69,12 +67,6 @@
             </if>
             <if test="privilegeUpdateAt != null" >
                 privilege_update_at,
-            </if>
-            <if test="privilegeCreateBy != null" >
-                privilege_create_by,
-            </if>
-            <if test="privilegeUpdateBy != null" >
-                privilege_update_by,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >

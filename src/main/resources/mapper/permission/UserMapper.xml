@@ -15,8 +15,6 @@
         <result column="user_status" property="userStatus" jdbcType="INTEGER" />
         <result column="user_create_at" property="userCreateAt" jdbcType="TIMESTAMP" />
         <result column="user_update_at" property="userUpdateAt" jdbcType="TIMESTAMP" />
-        <result column="user_create_by" property="userCreateBy" jdbcType="VARCHAR" />
-        <result column="user_update_by" property="userUpdateBy" jdbcType="VARCHAR" />
 
         <collection property="roleList" ofType="com.temp.permission.entity.Role">
             <id column="role_id" property="roleId" jdbcType="INTEGER" />
@@ -25,7 +23,7 @@
     </resultMap>
 
     <sql id="Base_Column_List" >
-        user_id, user_phone, user_name, user_email, user_password, user_token, user_avatar, user_login_count, user_last_ip, user_status, user_create_at, user_update_at, user_create_by, user_update_by
+        user_id, user_phone, user_name, user_email, user_password, user_token, user_avatar, user_login_count, user_last_ip, user_status, user_create_at, user_update_at
     </sql>
 
     <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.User">
@@ -68,12 +66,6 @@
             </if>
             <if test="userUpdateAt != null" >
                 AND user_update_at = #{userUpdateAt,jdbcType=TIMESTAMP}
-            </if>
-            <if test="userCreateBy != null" >
-                AND user_create_by = #{userCreateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="userUpdateBy != null" >
-                AND user_update_by = #{userUpdateBy,jdbcType=VARCHAR}
             </if>
         </where>
         ORDER BY user_id DESC
@@ -123,12 +115,6 @@
             <if test="user.userUpdateAt != null" >
                 AND user_update_at = #{user.userUpdateAt,jdbcType=TIMESTAMP}
             </if>
-            <if test="user.userCreateBy != null" >
-                AND user_create_by = #{user.userCreateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="user.userUpdateBy != null" >
-                AND user_update_by = #{user.userUpdateBy,jdbcType=VARCHAR}
-            </if>
         </where>
         ORDER BY user_id DESC LIMIT ${(page - 1) * size}, ${size}
     </select>
@@ -171,12 +157,6 @@
             </if>
             <if test="userUpdateAt != null" >
                 AND user_update_at = #{userUpdateAt,jdbcType=TIMESTAMP}
-            </if>
-            <if test="userCreateBy != null" >
-                AND user_create_by = #{userCreateBy,jdbcType=VARCHAR}
-            </if>
-            <if test="userUpdateBy != null" >
-                AND user_update_by = #{userUpdateBy,jdbcType=VARCHAR}
             </if>
         </where>
     </select>
@@ -255,12 +235,6 @@
             </if>
             <if test="userUpdateAt != null" >
                 user_update_at,
-            </if>
-            <if test="userCreateBy != null" >
-                user_create_by,
-            </if>
-            <if test="userUpdateBy != null" >
-                user_update_by,
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
@@ -344,12 +318,6 @@
             </if>
             <if test="userUpdateAt != null" >
                 user_update_at = #{userUpdateAt,jdbcType=TIMESTAMP},
-            </if>
-            <if test="userCreateBy != null" >
-                user_create_by = #{userCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="userUpdateBy != null" >
-                user_update_by = #{userUpdateBy,jdbcType=VARCHAR},
             </if>
         </set>
         where user_id = #{userId,jdbcType=INTEGER}
