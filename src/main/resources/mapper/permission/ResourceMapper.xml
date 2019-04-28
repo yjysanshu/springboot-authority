@@ -152,12 +152,6 @@
             <if test="resourceUpdateAt != null" >
                 #{resourceUpdateAt,jdbcType=TIMESTAMP},
             </if>
-            <if test="resourceCreateBy != null" >
-                #{resourceCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="resourceUpdateBy != null" >
-                #{resourceUpdateBy,jdbcType=VARCHAR},
-            </if>
         </trim>
     </insert>
 

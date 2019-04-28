@@ -11,8 +11,6 @@ public class Role {
     private Integer roleType;
     private Date roleCreateAt;
     private Date roleUpdateAt;
-    private String roleCreateBy;
-    private String roleUpdateBy;
 
     public Integer getRoleId() {
         return roleId;
@@ -76,21 +74,5 @@ public class Role {
 
     public void setRoleUpdateAt(Date roleUpdateAt) {
         this.roleUpdateAt = roleUpdateAt;
-    }
-
-    public String getRoleCreateBy() {
-        return roleCreateBy;
-    }
-
-    public void setRoleCreateBy(String roleCreateBy) {
-        this.roleCreateBy = roleCreateBy;
-    }
-
-    public String getRoleUpdateBy() {
-        return roleUpdateBy;
-    }
-
-    public void setRoleUpdateBy(String roleUpdateBy) {
-        this.roleUpdateBy = roleUpdateBy;
     }
 }

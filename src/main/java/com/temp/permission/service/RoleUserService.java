@@ -241,8 +241,6 @@ ConsoleUtil.formatPrint(parentResourceList);
         }
         roleUser.setRoleUserRoleId(request.getRoleId());
         roleUser.setRoleUserUserId(request.getUserId());
-        roleUser.setRoleUserCreateBy(request.getCreateBy());
-        roleUser.setRoleUserUpdateBy(request.getUpdateBy());
         if (request.getId() != null) {
             return mapper.update(roleUser);
         } else {
@@ -261,8 +259,6 @@ ConsoleUtil.formatPrint(parentResourceList);
         response.setUserId(roleUser.getRoleUserUserId());
         response.setCreateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(roleUser.getRoleUserCreateAt()));
         response.setUpdateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(roleUser.getRoleUserUpdateAt()));
-        response.setCreateBy(roleUser.getRoleUserCreateBy());
-        response.setUpdateBy(roleUser.getRoleUserUpdateBy());
         return response;
     }
 
@@ -273,8 +269,6 @@ ConsoleUtil.formatPrint(parentResourceList);
         roleUser.setRoleUserUserId(request.getUserId());
         roleUser.setRoleUserCreateAt(request.getCreateAt());
         roleUser.setRoleUserUpdateAt(request.getUpdateAt());
-        roleUser.setRoleUserCreateBy(request.getCreateBy());
-        roleUser.setRoleUserUpdateBy(request.getUpdateBy());
         return roleUser;
     }
 }

@@ -274,12 +274,6 @@
             <if test="userUpdateAt != null" >
                 #{userUpdateAt,jdbcType=TIMESTAMP},
             </if>
-            <if test="userCreateBy != null" >
-                #{userCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="userUpdateBy != null" >
-                #{userUpdateBy,jdbcType=VARCHAR},
-            </if>
         </trim>
     </insert>
 

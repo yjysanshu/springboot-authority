@@ -11,8 +11,6 @@ public class Resource {
     private String resourceData;
     private Date resourceCreateAt;
     private Date resourceUpdateAt;
-    private String resourceCreateBy;
-    private String resourceUpdateBy;
 
     private List<Role> roleList;
 
@@ -70,22 +68,6 @@ public class Resource {
 
     public void setResourceUpdateAt(Date resourceUpdateAt) {
         this.resourceUpdateAt = resourceUpdateAt;
-    }
-
-    public String getResourceCreateBy() {
-        return resourceCreateBy;
-    }
-
-    public void setResourceCreateBy(String resourceCreateBy) {
-        this.resourceCreateBy = resourceCreateBy;
-    }
-
-    public String getResourceUpdateBy() {
-        return resourceUpdateBy;
-    }
-
-    public void setResourceUpdateBy(String resourceUpdateBy) {
-        this.resourceUpdateBy = resourceUpdateBy;
     }
 
     public List<Role> getRoleList() {

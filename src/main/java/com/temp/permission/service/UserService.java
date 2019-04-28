@@ -102,8 +102,6 @@ public class UserService extends BaseService {
         user.setUserAvatar(request.getAvatar());
         user.setUserStatus(request.getStatus());
         user.setUserLastIp(this.getIpAddress());
-        user.setUserCreateBy(request.getCreateBy());
-        user.setUserUpdateBy(request.getUpdateBy());
         ConsoleUtil.formatPrint(user);
         if (request.getId() != null) {
             mapper.update(user);
@@ -174,8 +172,6 @@ public class UserService extends BaseService {
         response.setStatus(user.getUserStatus());
         response.setCreateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(user.getUserCreateAt()));
         response.setUpdateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(user.getUserUpdateAt()));
-        response.setCreateBy(user.getUserCreateBy());
-        response.setUpdateBy(user.getUserUpdateBy());
 
         Map<Integer, String> map = new HashMap<>();
         if (user.getRoleList().size() > 0) {
@@ -202,8 +198,6 @@ public class UserService extends BaseService {
         user.setUserStatus(request.getStatus());
         user.setUserCreateAt(request.getCreateAt());
         user.setUserUpdateAt(request.getUpdateAt());
-        user.setUserCreateBy(request.getCreateBy());
-        user.setUserUpdateBy(request.getUpdateBy());
         return user;
     }
 }

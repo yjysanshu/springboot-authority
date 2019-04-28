@@ -8,8 +8,6 @@ public class RoleUser {
     private Integer roleUserUserId;
     private Date roleUserCreateAt;
     private Date roleUserUpdateAt;
-    private String roleUserCreateBy;
-    private String roleUserUpdateBy;
 
     private User user;
     private Role role;
@@ -52,22 +50,6 @@ public class RoleUser {
 
     public void setRoleUserUpdateAt(Date roleUserUpdateAt) {
         this.roleUserUpdateAt = roleUserUpdateAt;
-    }
-
-    public String getRoleUserCreateBy() {
-        return roleUserCreateBy;
-    }
-
-    public void setRoleUserCreateBy(String roleUserCreateBy) {
-        this.roleUserCreateBy = roleUserCreateBy;
-    }
-
-    public String getRoleUserUpdateBy() {
-        return roleUserUpdateBy;
-    }
-
-    public void setRoleUserUpdateBy(String roleUserUpdateBy) {
-        this.roleUserUpdateBy = roleUserUpdateBy;
     }
 
     public User getUser() {

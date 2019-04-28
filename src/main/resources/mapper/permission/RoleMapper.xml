@@ -195,12 +195,6 @@
             <if test="roleUpdateAt != null" >
                 #{roleUpdateAt,jdbcType=TIMESTAMP},
             </if>
-            <if test="roleCreateBy != null" >
-                #{roleCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="roleUpdateBy != null" >
-                #{roleUpdateBy,jdbcType=VARCHAR},
-            </if>
         </trim>
     </insert>
 

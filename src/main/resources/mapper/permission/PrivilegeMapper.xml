@@ -85,12 +85,6 @@
             <if test="privilegeUpdateAt != null" >
                 #{privilegeUpdateAt,jdbcType=TIMESTAMP},
             </if>
-            <if test="privilegeCreateBy != null" >
-                #{privilegeCreateBy,jdbcType=VARCHAR},
-            </if>
-            <if test="privilegeUpdateBy != null" >
-                #{privilegeUpdateBy,jdbcType=VARCHAR},
-            </if>
         </trim>
     </insert>
 

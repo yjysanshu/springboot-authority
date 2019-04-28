@@ -16,8 +16,6 @@ public class User {
     private Integer userStatus;
     private Date userCreateAt;
     private Date userUpdateAt;
-    private String userCreateBy;
-    private String userUpdateBy;
 
     private List<Role> roleList;
 
@@ -117,22 +115,6 @@ public class User {
         this.userUpdateAt = userUpdateAt;
     }
 
-    public String getUserCreateBy() {
-        return userCreateBy;
-    }
-
-    public void setUserCreateBy(String userCreateBy) {
-        this.userCreateBy = userCreateBy;
-    }
-
-    public String getUserUpdateBy() {
-        return userUpdateBy;
-    }
-
-    public void setUserUpdateBy(String userUpdateBy) {
-        this.userUpdateBy = userUpdateBy;
-    }
-
     public List<Role> getRoleList() {
         return roleList;
     }
@@ -156,8 +138,6 @@ public class User {
                 ", userStatus=" + userStatus +
                 ", userCreateAt=" + userCreateAt +
                 ", userUpdateAt=" + userUpdateAt +
-                ", userCreateBy='" + userCreateBy + '\'' +
-                ", userUpdateBy='" + userUpdateBy + '\'' +
                 '}';
     }
 }

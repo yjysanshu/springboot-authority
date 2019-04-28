@@ -124,8 +124,6 @@ public class RoleService extends BaseService {
         role.setRoleDesc(request.getDesc());
         role.setRoleStatus(request.getStatus());
         role.setRoleType(request.getType());
-        role.setRoleCreateBy(request.getCreateBy());
-        role.setRoleUpdateBy(request.getUpdateBy());
         if (request.getId() != null) {
             return mapper.update(role);
         } else {
@@ -147,8 +145,6 @@ public class RoleService extends BaseService {
         response.setType(role.getRoleType());
         response.setCreateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(role.getRoleCreateAt()));
         response.setUpdateAt((new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format(role.getRoleUpdateAt()));
-        response.setCreateBy(role.getRoleCreateBy());
-        response.setUpdateBy(role.getRoleUpdateBy());
         return response;
     }
 
@@ -162,8 +158,6 @@ public class RoleService extends BaseService {
         role.setRoleType(request.getType());
         role.setRoleCreateAt(request.getCreateAt());
         role.setRoleUpdateAt(request.getUpdateAt());
-        role.setRoleCreateBy(request.getCreateBy());
-        role.setRoleUpdateBy(request.getUpdateBy());
         return role;
     }
 }

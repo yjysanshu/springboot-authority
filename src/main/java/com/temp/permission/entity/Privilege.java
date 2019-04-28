@@ -8,8 +8,6 @@ public class Privilege {
     private Integer privilegeRoleId;
     private Date privilegeCreateAt;
     private Date privilegeUpdateAt;
-    private String privilegeCreateBy;
-    private String privilegeUpdateBy;
 
     private Role role;
     private Resource resource;
@@ -52,22 +50,6 @@ public class Privilege {
 
     public void setPrivilegeUpdateAt(Date privilegeUpdateAt) {
         this.privilegeUpdateAt = privilegeUpdateAt;
-    }
-
-    public String getPrivilegeCreateBy() {
-        return privilegeCreateBy;
-    }
-
-    public void setPrivilegeCreateBy(String privilegeCreateBy) {
-        this.privilegeCreateBy = privilegeCreateBy;
-    }
-
-    public String getPrivilegeUpdateBy() {
-        return privilegeUpdateBy;
-    }
-
-    public void setPrivilegeUpdateBy(String privilegeUpdateBy) {
-        this.privilegeUpdateBy = privilegeUpdateBy;
     }
 
     public Role getRole() {
