@@ -5,10 +5,18 @@
 
 	<groupId>com.temp</groupId>
 	<artifactId>temp</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
+	<version>1.1.0</version>
+	<packaging>pom</packaging>
 	<name>temp</name>
 	<description>Temp project for Spring Boot</description>
+
+	<modules>
+		<module>p-permission</module>
+		<module>p-system</module>
+		<module>p-generator</module>
+		<module>p-common</module>
+		<module>p-admin</module>
+	</modules>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>

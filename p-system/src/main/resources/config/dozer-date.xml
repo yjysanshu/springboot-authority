@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+    <configuration>
+        <custom-converters> <!-- these are always bi-directional -->
+            <converter type="com.temp.common.util.convert.DozerSTDConverter" >
+                <class-a>java.lang.String</class-a>
+                <class-b>java.util.Date</class-b>
+            </converter>
+            <converter type="com.temp.permission.util.convert.DozerResourceConverter" >
+                <class-a>com.temp.permission.entity.Resource</class-a>
+                <class-b>com.temp.permission.model.dto.ResourceDTO</class-b>
+            </converter>
+        </custom-converters>
+    </configuration>
+
+</mappings>

@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.temp.permission.mapper.UserMapper" >
+
+    <resultMap id="BaseResultMap" type="com.temp.permission.entity.User" >
+        <id column="user_id" property="userId" jdbcType="INTEGER" />
+        <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+        <result column="user_name" property="userName" jdbcType="VARCHAR" />
+        <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+        <result column="user_password" property="userPassword" jdbcType="VARCHAR" />
+        <result column="user_avatar" property="userAvatar" jdbcType="VARCHAR" />
+        <result column="user_login_count" property="userLoginCount" jdbcType="INTEGER" />
+        <result column="user_last_ip" property="userLastIp" jdbcType="VARCHAR" />
+        <result column="user_status" property="userStatus" jdbcType="INTEGER" />
+        <result column="user_create_at" property="userCreateAt" jdbcType="TIMESTAMP" />
+        <result column="user_update_at" property="userUpdateAt" jdbcType="TIMESTAMP" />
+
+        <collection property="roleList" ofType="com.temp.permission.entity.Role">
+            <id column="role_id" property="roleId" jdbcType="INTEGER" />
+            <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+        </collection>
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        user_id, user_phone, user_name, user_email, user_password, user_avatar, user_login_count, user_last_ip, user_status, user_create_at, user_update_at
+    </sql>
+
+    <select id="queryList" resultMap="BaseResultMap" parameterType="com.temp.permission.entity.User">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM admin_user
+        <where>
+            <if test="userId != null" >
+                AND user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userPhone != null" >
+                AND user_phone = #{userPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null" >
+                AND user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="userEmail != null" >
+                AND user_email = #{userEmail,jdbcType=VARCHAR}
+            </if>
+            <if test="userPassword != null" >
+                AND user_password = #{userPassword,jdbcType=VARCHAR}
+            </if>
+            <if test="userAvatar != null" >
+                AND user_avatar = #{userAvatar,jdbcType=VARCHAR}
+            </if>
+            <if test="userLoginCount != null" >
+                AND user_login_count = #{userLoginCount,jdbcType=INTEGER}
+            </if>
+            <if test="userLastIp != null" >
+                AND user_last_ip = #{userLastIp,jdbcType=VARCHAR}
+            </if>
+            <if test="userStatus != null" >
+                AND user_status = #{userStatus,jdbcType=INTEGER}
+            </if>
+            <if test="userCreateAt != null" >
+                AND user_create_at = #{userCreateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="userUpdateAt != null" >
+                AND user_update_at = #{userUpdateAt,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        ORDER BY user_id DESC
+    </select>
+
+    <select id="queryPageList" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        , role_id, role_name
+        FROM admin_user
+        LEFT JOIN admin_role_user ON role_user_user_id=user_id
+        LEFT JOIN admin_role ON role_id=role_user_role_id
+        <where>
+            <if test="user.userId != null" >
+                AND user_id = #{user.userId,jdbcType=INTEGER}
+            </if>
+            <if test="user.userPhone != null" >
+                AND user_phone = #{user.userPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="user.userName != null" >
+                AND user_name = #{user.userName,jdbcType=VARCHAR}
+            </if>
+            <if test="user.userEmail != null" >
+                AND user_email = #{user.userEmail,jdbcType=VARCHAR}
+            </if>
+            <if test="user.userPassword != null" >
+                AND user_password = #{user.userPassword,jdbcType=VARCHAR}
+            </if>
+            <if test="user.userAvatar != null" >
+                AND user_avatar = #{user.userAvatar,jdbcType=VARCHAR}
+            </if>
+            <if test="user.userLoginCount != null" >
+                AND user_login_count = #{user.userLoginCount,jdbcType=INTEGER}
+            </if>
+            <if test="user.userLastIp != null" >
+                AND user_last_ip = #{user.userLastIp,jdbcType=VARCHAR}
+            </if>
+            <if test="user.userStatus != null" >
+                AND user_status = #{user.userStatus,jdbcType=INTEGER}
+            </if>
+            <if test="user.userCreateAt != null" >
+                AND user_create_at = #{user.userCreateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="user.userUpdateAt != null" >
+                AND user_update_at = #{user.userUpdateAt,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+        ORDER BY user_id DESC LIMIT ${(page - 1) * size}, ${size}
+    </select>
+
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="com.temp.permission.entity.User">
+        SELECT COUNT(*) FROM admin_user
+        <where>
+            <if test="userId != null" >
+                AND user_id = #{userId,jdbcType=INTEGER}
+            </if>
+            <if test="userPhone != null" >
+                AND user_phone = #{userPhone,jdbcType=VARCHAR}
+            </if>
+            <if test="userName != null" >
+                AND user_name = #{userName,jdbcType=VARCHAR}
+            </if>
+            <if test="userEmail != null" >
+                AND user_email = #{userEmail,jdbcType=VARCHAR}
+            </if>
+            <if test="userPassword != null" >
+                AND user_password = #{userPassword,jdbcType=VARCHAR}
+            </if>
+            <if test="userAvatar != null" >
+                AND user_avatar = #{userAvatar,jdbcType=VARCHAR}
+            </if>
+            <if test="userLoginCount != null" >
+                AND user_login_count = #{userLoginCount,jdbcType=INTEGER}
+            </if>
+            <if test="userLastIp != null" >
+                AND user_last_ip = #{userLastIp,jdbcType=VARCHAR}
+            </if>
+            <if test="userStatus != null" >
+                AND user_status = #{userStatus,jdbcType=INTEGER}
+            </if>
+            <if test="userCreateAt != null" >
+                AND user_create_at = #{userCreateAt,jdbcType=TIMESTAMP}
+            </if>
+            <if test="userUpdateAt != null" >
+                AND user_update_at = #{userUpdateAt,jdbcType=TIMESTAMP}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryOne" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM admin_user
+        WHERE user_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="queryOneByPhone" resultMap="BaseResultMap" parameterType="java.lang.String">
+        SELECT admin_user.*, role_id, role_name
+        FROM admin_user
+        JOIN admin_role_user ON role_user_user_id=user_id
+        JOIN admin_role ON role_id=role_user_role_id
+        WHERE user_phone = #{phone, jdbcType=VARCHAR}
+    </select>
+
+    <select id="queryListByRoleId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM admin_user
+        LEFT JOIN admin_role_user ON role_user_user_id=user_id
+        WHERE role_user_role_id = #{roleId,jdbcType=INTEGER}
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer" >
+        DELETE FROM admin_user
+        WHERE user_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="add" useGeneratedKeys="true" keyProperty="userId" parameterType="com.temp.permission.entity.User" >
+        INSERT INTO admin_user
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                user_id,
+            </if>
+            <if test="userPhone != null" >
+                user_phone,
+            </if>
+            <if test="userName != null" >
+                user_name,
+            </if>
+            <if test="userEmail != null" >
+                user_email,
+            </if>
+            <if test="userPassword != null" >
+                user_password,
+            </if>
+            <if test="userAvatar != null" >
+                user_avatar,
+            </if>
+            <if test="userLoginCount != null" >
+                user_login_count,
+            </if>
+            <if test="userLastIp != null" >
+                user_last_ip,
+            </if>
+            <if test="userStatus != null" >
+                user_status,
+            </if>
+            <if test="userCreateAt != null" >
+                user_create_at,
+            </if>
+            <if test="userUpdateAt != null" >
+                user_update_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="userId != null" >
+                #{userId,jdbcType=INTEGER},
+            </if>
+            <if test="userPhone != null" >
+                #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null" >
+                #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null" >
+                #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatar != null" >
+                #{userAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="userLoginCount != null" >
+                #{userLoginCount,jdbcType=INTEGER},
+            </if>
+            <if test="userLastIp != null" >
+                #{userLastIp,jdbcType=VARCHAR},
+            </if>
+            <if test="userStatus != null" >
+                #{userStatus,jdbcType=INTEGER},
+            </if>
+            <if test="userCreateAt != null" >
+                #{userCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userUpdateAt != null" >
+                #{userUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="update" parameterType="com.temp.permission.entity.User" >
+        update admin_user
+        <set>
+            <if test="userPhone != null" >
+                user_phone = #{userPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="userName != null" >
+                user_name = #{userName,jdbcType=VARCHAR},
+            </if>
+            <if test="userEmail != null" >
+                user_email = #{userEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="userPassword != null" >
+                user_password = #{userPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="userAvatar != null" >
+                user_avatar = #{userAvatar,jdbcType=VARCHAR},
+            </if>
+            <if test="userLoginCount != null" >
+                user_login_count = #{userLoginCount,jdbcType=INTEGER},
+            </if>
+            <if test="userLastIp != null" >
+                user_last_ip = #{userLastIp,jdbcType=VARCHAR},
+            </if>
+            <if test="userStatus != null" >
+                user_status = #{userStatus,jdbcType=INTEGER},
+            </if>
+            <if test="userCreateAt != null" >
+                user_create_at = #{userCreateAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="userUpdateAt != null" >
+                user_update_at = #{userUpdateAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where user_id = #{userId,jdbcType=INTEGER}
+    </update>
+
+</mapper>
