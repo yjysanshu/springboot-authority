@@ -28,4 +28,4 @@
 /nbdist/
 /.nb-gradle/
 
-/p-system/src/main/resource/code
+/auth-system/src/main/resource/code
