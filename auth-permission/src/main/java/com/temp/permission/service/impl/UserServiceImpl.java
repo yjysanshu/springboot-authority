@@ -1,13 +1,15 @@
 package com.temp.permission.service.impl;
 
 import com.temp.permission.consts.CommonConst;
+import com.temp.permission.domain.dto.UserChangeDTO;
+import com.temp.permission.domain.dto.UserDTO;
+import com.temp.permission.domain.vo.UserVO;
 import com.temp.permission.entity.Role;
 import com.temp.permission.entity.User;
 import com.temp.permission.mapper.UserMapper;
 import com.temp.permission.model.request.ChangeRequest;
-import com.temp.permission.model.request.UserRequest;
-import com.temp.permission.model.response.UserResponse;
 import com.temp.common.util.ConsoleUtil;
+import com.temp.permission.service.UserService;
 import com.temp.permission.service.base.BaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -18,7 +20,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
-public class UserServiceImpl extends BaseService {
+public class UserServiceImpl extends BaseService implements UserService {
 
     @Autowired
     private UserMapper repo;
@@ -28,19 +30,19 @@ public class UserServiceImpl extends BaseService {
 
     /**
      * 获取所有的用户信息-前端显示
-     * @param request AdminUserRequest
+     * @param dto AdminUserDTO
      * @return 所有的用户信息-前端显示
      */
-    public List<UserResponse> getList(UserRequest request) {
-        User userSearch = formatModelDetail(request);
+    public List<UserVO> getList(UserDTO dto) {
+        User userSearch = formatModelDetail(dto);
         Map<String, Object> map = new HashMap<>();
         map.put("user", userSearch);
-        map.put("page", request.getCurrentPage());
-        map.put("size", request.getLimit());
+        map.put("page", dto.getCurrentPage());
+        map.put("size", dto.getLimit());
         List<User> userList = repo.queryPageList(map);
-        List<UserResponse> list = new ArrayList<>();
+        List<UserVO> list = new ArrayList<>();
         for (User user : userList) {
-            UserResponse userResponse = formatResponseDetail(user);
+            UserVO userResponse = formatResponseDetail(user);
             list.add(userResponse);
         }
         return list;
@@ -51,7 +53,7 @@ public class UserServiceImpl extends BaseService {
      * @param request
      * @return
      */
-    public Integer getTotal(UserRequest request) {
+    public Integer getTotal(UserDTO request) {
         User adminUserSearch = formatModelDetail(request);
         return repo.queryCount(adminUserSearch);
     }
@@ -60,7 +62,7 @@ public class UserServiceImpl extends BaseService {
      * 获取用户信息
      * @return -
      */
-    public UserResponse getUserInfo() {
+    public UserVO getUserInfo() {
         User user = this.getCurrentUser();
         return formatResponseDetail(user);
     }
@@ -84,7 +86,7 @@ public class UserServiceImpl extends BaseService {
 
 
     @Transactional
-    public Integer save(UserRequest request) {
+    public Integer save(UserDTO request) {
         User user;
         if (request.getId() != null) {
             user = repo.queryOne(request.getId());
@@ -128,6 +130,11 @@ public class UserServiceImpl extends BaseService {
         return repo.update(user);
     }
 
+    @Override
+    public Integer changePwd(UserChangeDTO request) {
+        return null;
+    }
+
     /**
      * 修改信息
      * @return -
@@ -155,8 +162,8 @@ public class UserServiceImpl extends BaseService {
         return repo.delete(id);
     }
 
-    private UserResponse formatResponseDetail(User user) {
-        UserResponse response = new UserResponse();
+    private UserVO formatResponseDetail(User user) {
+        UserVO response = new UserVO();
         response.setId(user.getUserId());
         response.setPhone(user.getUserPhone());
         response.setName(user.getUserName());
@@ -180,19 +187,19 @@ public class UserServiceImpl extends BaseService {
         return response;
     }
 
-    private User formatModelDetail(UserRequest request) {
+    private User formatModelDetail(UserDTO dto) {
         User user = new User();
-        user.setUserId(request.getId());
-        user.setUserPhone(request.getPhone());
-        user.setUserName(request.getName());
-        user.setUserEmail(request.getEmail());
-        user.setUserPassword(request.getPassword());
-        user.setUserAvatar(request.getAvatar());
-        user.setUserLoginCount(request.getLoginCount());
-        user.setUserLastIp(request.getLastIp());
-        user.setUserStatus(request.getStatus());
-        user.setUserCreateAt(request.getCreateAt());
-        user.setUserUpdateAt(request.getUpdateAt());
+        user.setUserId(dto.getId());
+        user.setUserPhone(dto.getPhone());
+        user.setUserName(dto.getName());
+        user.setUserEmail(dto.getEmail());
+        user.setUserPassword(dto.getPassword());
+        user.setUserAvatar(dto.getAvatar());
+        user.setUserLoginCount(dto.getLoginCount());
+        user.setUserLastIp(dto.getLastIp());
+        user.setUserStatus(dto.getStatus());
+        user.setUserCreateAt(dto.getCreateAt());
+        user.setUserUpdateAt(dto.getUpdateAt());
         return user;
     }
 }

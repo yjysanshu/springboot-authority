@@ -3,10 +3,10 @@ package com.temp.permission.controller;
 import com.temp.common.consts.Constants;
 import com.temp.common.model.ResponseData;
 import com.temp.common.util.FormatUtil;
+import com.temp.permission.domain.dto.UserChangeDTO;
+import com.temp.permission.domain.dto.UserDTO;
+import com.temp.permission.domain.vo.MenuVO;
 import com.temp.permission.model.dto.param.ParamIdDTO;
-import com.temp.permission.model.request.ChangeRequest;
-import com.temp.permission.model.request.UserRequest;
-import com.temp.permission.model.response.MenuResponse;
 import com.temp.permission.service.impl.MenuServiceImpl;
 import com.temp.permission.service.impl.UserServiceImpl;
 import io.swagger.annotations.Api;
@@ -38,14 +38,14 @@ public class UserController {
 
     @ApiOperation(value = "用户信息列表", notes = "根据参数查询用户信息列表")
     @RequestMapping(value = "/list", method = { RequestMethod.POST })
-    public ResponseData list(UserRequest request) {
+    public ResponseData list(UserDTO request) {
         return FormatUtil.success(FormatUtil.formatList(service.getList(request),
                 service.getTotal(request)));
     }
 
     @ApiOperation(value = "新增或修改用户信息", notes = "根据ID确定是否存在用户信息，进行新增或修改")
     @RequestMapping(value = "/save", method = { RequestMethod.POST })
-    public ResponseData save(@RequestBody UserRequest request) {
+    public ResponseData save(@RequestBody UserDTO request) {
         return FormatUtil.success(service.save(request));
     }
 
@@ -57,14 +57,14 @@ public class UserController {
 
     @ApiOperation(value = "修改密码", notes = "根据信息修改用户密码")
     @RequestMapping(value = "/change-pwd", method = { RequestMethod.POST })
-    public ResponseData changePwd(@RequestBody ChangeRequest request) {
+    public ResponseData changePwd(@RequestBody UserChangeDTO request) {
         int count = service.changePwd(request);
         return FormatUtil.success(count);
     }
 
     @ApiOperation(value = "删除用户信息", notes = "根据ID删除用户信息")
     @RequestMapping(value = "/del", method = { RequestMethod.DELETE })
-    public ResponseData delete(@RequestBody UserRequest request) {
+    public ResponseData delete(@RequestBody UserDTO request) {
         if (service.delete(request.getId()) > 0) {
             return FormatUtil.success();
         }
@@ -74,12 +74,12 @@ public class UserController {
     @ApiOperation(value = "导航菜单", notes = "根据用户信息查询导航菜单")
     @RequestMapping(value = "/menu", method = { RequestMethod.GET })
     public ResponseData menu() throws IOException {
-        List<MenuResponse> list = menuService.getMenuByUser();
+        List<MenuVO> list = menuService.getMenuByUser();
         //调整父菜单的顺序
         list.sort((o1, o2) -> o2.getSeq().compareTo(o1.getSeq()));
 
         //调整子菜单的顺序
-        for (MenuResponse menu : list) {
+        for (MenuVO menu : list) {
             menu.getChildren().sort((o1, o2) -> o2.getSeq().compareTo(o1.getSeq()));
         }
         return FormatUtil.success(list);

@@ -22,6 +22,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = Exception.class)
     public ResponseData defaultErrorHandler(HttpServletRequest req, Exception e) throws Exception {
         e.printStackTrace();
-        return new ResponseData(Constants.SYSTEM_ERROR);
+        return new ResponseData(Constants.SYSTEM_ERROR, e.getMessage());
     }
 }
